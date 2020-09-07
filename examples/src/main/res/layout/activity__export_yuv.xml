@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mSurfaceView" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/app_name"
+        android:layout_centerInParent="true"
+        android:onClick="onClick"
+        android:scaleType="centerCrop"
+        android:clickable="true"
+        android:id="@+id/mImage"
+        android:focusable="true" />
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tv_start_bg"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:text="@string/capture_yuv"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:id="@+id/mTvCap"
+        android:layout_marginBottom="20dp" />
+
+</RelativeLayout>
