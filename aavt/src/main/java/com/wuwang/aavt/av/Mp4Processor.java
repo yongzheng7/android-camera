@@ -31,7 +31,6 @@ import java.util.concurrent.Semaphore;
  *
  */
 @Deprecated
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class Mp4Processor {
 
     private final int TIME_OUT=1000;

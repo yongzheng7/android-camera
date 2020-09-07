@@ -33,7 +33,6 @@ import javax.microedition.khronos.opengles.GL10;
  * @author wuwang
  * @version v1.0 2017:11:01 11:41
  */
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class EglHelper {
 
     private boolean isDebug=true;
@@ -149,7 +148,6 @@ public class EglHelper {
         return makeCurrent(mEGLSurface,mEGLContext);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void setPresentationTime(EGLSurface surface, long time){
         EGLExt.eglPresentationTimeANDROID(mEGLDisplay,surface,time);
     }
@@ -203,8 +201,6 @@ public class EglHelper {
     }
 
     //创建视频数据流的OES TEXTURE
-
-
     private void log(String log){
         if(isDebug){
             Log.e("EGLHelper",log);

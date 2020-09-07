@@ -18,11 +18,21 @@ public class Observable<Type> implements IObservable<Type> {
         temp.add(observer);
     }
 
-    public void clear(){
-        if(temp!=null){
-            temp.clear();
-            temp=null;
+    @Override
+    public boolean removeObserver(IObserver<Type> observer) {
+        if(temp==null){
+            return true ;
         }
+        return temp.remove(observer);
+    }
+
+    @Override
+    public int clearObserver() {
+        if(temp == null) return 0 ;
+        int size = temp.size() ;
+        temp.clear();
+        temp = null ;
+        return size;
     }
 
     @Override

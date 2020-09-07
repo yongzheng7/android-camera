@@ -16,12 +16,13 @@ package com.wuwang.aavt.examples;
 import android.graphics.Bitmap;
 import android.opengl.EGLSurface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.wuwang.aavt.gl.FrameBuffer;
 import com.wuwang.aavt.gl.LazyFilter;

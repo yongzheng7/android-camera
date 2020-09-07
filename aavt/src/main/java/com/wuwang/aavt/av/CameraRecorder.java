@@ -1,6 +1,5 @@
 package com.wuwang.aavt.av;
 
-import android.annotation.TargetApi;
 import android.graphics.SurfaceTexture;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -34,7 +33,6 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.Semaphore;
 
 @Deprecated
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class CameraRecorder {
 
     private final int TIME_OUT=1000;
@@ -119,6 +117,7 @@ public class CameraRecorder {
                 mInputTexture.setOnFrameAvailableListener(new SurfaceTexture.OnFrameAvailableListener() {
                     @Override
                     public void onFrameAvailable(SurfaceTexture surfaceTexture) {
+                        AvLog.d("CameraRecorder GLThread mInputTexture start");
                         mSem.release();
                     }
                 });
@@ -287,6 +286,7 @@ public class CameraRecorder {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                AvLog.d("CameraRecorder GLThread mGLThreadFlag ="+mGLThreadFlag);
                 if(mGLThreadFlag){
                     long time=(System.currentTimeMillis()-BASE_TIME)*1000;
                     mInputTexture.updateTexImage();
@@ -396,11 +396,6 @@ public class CameraRecorder {
 
         private MediaFormat mAudioFormat;
         private MediaFormat mVideoFormat;
-
-        public Configuration(MediaFormat audio,MediaFormat video){
-            this.mAudioFormat=audio;
-            this.mVideoFormat=video;
-        }
 
         public Configuration(int width,int height){
             mAudioFormat=MediaFormat.createAudioFormat("audio/mp4a-latm",48000,2);

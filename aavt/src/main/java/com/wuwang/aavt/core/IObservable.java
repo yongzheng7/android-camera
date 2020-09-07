@@ -8,6 +8,10 @@ public interface IObservable<Type> {
 
     void addObserver(IObserver<Type> observer);
 
+    boolean removeObserver(IObserver<Type> observer);
+
+    int clearObserver();
+
     void notify(Type type);
 
 }

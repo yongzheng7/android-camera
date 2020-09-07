@@ -15,7 +15,8 @@ package com.wuwang.aavt.media.hard;
 
 import android.media.MediaCodec;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.RequiresApi;
 
 import java.nio.ByteBuffer;
 

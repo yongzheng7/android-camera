@@ -2,11 +2,12 @@ package com.wuwang.aavt.examples;
 
 import android.Manifest;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mYuvExport:
                 startActivity(new Intent(this,YuvExportActivity.class));
+                break;
+            case R.id.mCameraRecord2:
+                startActivity(new Intent(this,CameraRecorderOldActivity.class));
                 break;
             default:break;
         }

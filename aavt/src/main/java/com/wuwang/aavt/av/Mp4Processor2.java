@@ -24,9 +24,6 @@ import com.wuwang.aavt.media.hard.StrengthenMp4MuxStore;
 
 /**
  * Mp4Processor2 用于处理Mp4文件
- *
- * @author wuwang
- * @version v1.0 2017:10:26 18:48
  */
 public class Mp4Processor2 {
 

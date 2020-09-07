@@ -27,9 +27,6 @@ import com.wuwang.aavt.media.hard.StrengthenMp4MuxStore;
 
 /**
  * CameraRecorder2 相机预览及录制工具类
- *
- * @author wuwang
- * @version v1.0 2017:10:26 18:35
  */
 public class CameraRecorder2 {
 

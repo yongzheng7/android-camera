@@ -19,6 +19,13 @@
         android:onClick="onClick"
         android:text="@string/camerarecord" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mCameraRecord2"
+        android:onClick="onClick"
+        android:text="@string/camerarecord2" />
+
 
     <Button
         android:layout_width="match_parent"

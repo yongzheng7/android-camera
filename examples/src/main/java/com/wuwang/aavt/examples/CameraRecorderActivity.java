@@ -1,19 +1,19 @@
 package com.wuwang.aavt.examples;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.wuwang.aavt.av.CameraRecorder2;
 import com.wuwang.aavt.gl.BaseFilter;
@@ -26,7 +26,7 @@ import com.wuwang.aavt.gl.StickFigureFilter;
 import com.wuwang.aavt.gl.WaterMarkFilter;
 import com.wuwang.aavt.utils.MatrixUtils;
 
-public class CameraRecorderActivity extends AppCompatActivity{
+public class CameraRecorderActivity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
     private TextView mTvPreview,mTvRecord;
@@ -42,9 +42,9 @@ public class CameraRecorderActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_record);
-        mSurfaceView= (SurfaceView) findViewById(R.id.mSurfaceView);
-        mTvRecord= (TextView) findViewById(R.id.mTvRec);
-        mTvPreview= (TextView) findViewById(R.id.mTvShow);
+        mSurfaceView=  findViewById(R.id.mSurfaceView);
+        mTvRecord=  findViewById(R.id.mTvRec);
+        mTvPreview=  findViewById(R.id.mTvShow);
 
         mCamera =new CameraRecorder2();
         mCamera.setOutputPath(tempPath);
