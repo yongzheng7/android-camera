@@ -13,9 +13,8 @@
  */
 package com.wuwang.aavt.media;
 
-import com.wuwang.aavt.core.Renderer;
 import com.wuwang.aavt.gl.OesFilter;
-import com.wuwang.aavt.utils.MatrixUtils;
+import com.wyz.common.api.Renderer;
 
 
 /**
@@ -34,7 +33,7 @@ public class WrapRenderer implements Renderer {
 
     public WrapRenderer(Renderer renderer){
         this.mRenderer=renderer;
-        mFilter=new OesFilter();
+        this.mFilter=new OesFilter();
         setFlag(TYPE_MOVE);
     }
 

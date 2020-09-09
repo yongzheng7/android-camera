@@ -15,8 +15,7 @@ package com.wuwang.aavt.gl;
 
 import android.content.res.Resources;
 import android.opengl.GLES20;
-
-import com.wuwang.aavt.utils.MatrixUtils;
+import com.wyz.common.utils.MatrixUtils;
 
 import java.nio.ByteBuffer;
 
@@ -74,7 +73,7 @@ public class YuvOutputFilter extends BaseFilter {
                 mScaleFilter=new LazyFilter();
                 mScaleFilter.create();
                 mScaleFilter.sizeChanged(mWidth,mHeight);
-                MatrixUtils.getMatrix(mScaleFilter.getVertexMatrix(),MatrixUtils.TYPE_CENTERCROP,width,height,
+                MatrixUtils.Companion.getMatrix(mScaleFilter.getVertexMatrix(),MatrixUtils.Companion.getTYPE_CENTERCROP(),width,height,
                         mWidth,mHeight);
             }
         });

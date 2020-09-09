@@ -16,10 +16,10 @@ package com.wuwang.aavt.media;
 import android.opengl.EGLSurface;
 import android.opengl.GLES20;
 
-import com.wuwang.aavt.core.IObserver;
 import com.wuwang.aavt.gl.BaseFilter;
 import com.wuwang.aavt.gl.LazyFilter;
-import com.wuwang.aavt.utils.MatrixUtils;
+import com.wyz.common.api.IObserver;
+import com.wyz.common.utils.MatrixUtils;
 
 /**
  * SurfaceShower 用于将RenderBean展示到指定的Surface上
@@ -27,7 +27,7 @@ import com.wuwang.aavt.utils.MatrixUtils;
  * @author wuwang
  * @version v1.0 2017:10:27 08:53
  */
-public class SurfaceShower implements IObserver<RenderBean> {
+public class SurfaceShower implements IObserver<FrameBean> {
 
     private EGLSurface mShowSurface;
     private boolean isShow=false;
@@ -35,7 +35,7 @@ public class SurfaceShower implements IObserver<RenderBean> {
     private Object mSurface;
     private int mWidth;
     private int mHeight;
-    private int mMatrixType= MatrixUtils.TYPE_CENTERCROP;
+    private int mMatrixType= MatrixUtils.Companion.getTYPE_CENTERCROP() ;
     private OnDrawEndListener mListener;
 
     public void setOutputSize(int width,int height){
@@ -53,7 +53,6 @@ public class SurfaceShower implements IObserver<RenderBean> {
 
     /**
      * 设置矩阵变换类型
-     * @param type 变换类型，{@link MatrixUtils#TYPE_FITXY},{@link MatrixUtils#TYPE_FITSTART},{@link MatrixUtils#TYPE_CENTERCROP},{@link MatrixUtils#TYPE_CENTERINSIDE}或{@link MatrixUtils#TYPE_FITEND}
      */
     public void setMatrixType(int type){
         this.mMatrixType=type;
@@ -68,7 +67,7 @@ public class SurfaceShower implements IObserver<RenderBean> {
     }
 
     @Override
-    public void onCall(RenderBean rb) {
+    public void run(FrameBean rb) {
         if(rb.endFlag&&mShowSurface!=null){
             rb.egl.destroySurface(mShowSurface);
             mShowSurface=null;
@@ -78,9 +77,8 @@ public class SurfaceShower implements IObserver<RenderBean> {
                 mFilter=new LazyFilter();
                 mFilter.create();
                 mFilter.sizeChanged(rb.sourceWidth, rb.sourceHeight);
-                MatrixUtils.getMatrix(mFilter.getVertexMatrix(),mMatrixType,rb.sourceWidth,rb.sourceHeight,
-                        mWidth,mHeight);
-                MatrixUtils.flip(mFilter.getVertexMatrix(),false,true);
+                MatrixUtils.Companion.getMatrix(mFilter.getVertexMatrix(),mMatrixType,rb.sourceWidth,rb.sourceHeight, mWidth,mHeight);
+                MatrixUtils.Companion.flip(mFilter.getVertexMatrix(),false,true);
             }
             rb.egl.makeCurrent(mShowSurface);
             GLES20.glViewport(0,0,mWidth,mHeight);
@@ -106,7 +104,7 @@ public class SurfaceShower implements IObserver<RenderBean> {
          * @param surface 渲染的目标EGLSurface
          * @param bean 渲染用的资源
          */
-        void onDrawEnd(EGLSurface surface,RenderBean bean);
+        void onDrawEnd(EGLSurface surface, FrameBean bean);
     }
 
 }

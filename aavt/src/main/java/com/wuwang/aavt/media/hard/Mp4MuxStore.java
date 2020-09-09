@@ -13,13 +13,12 @@
  */
 package com.wuwang.aavt.media.hard;
 
-import android.annotation.TargetApi;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Build;
 import android.util.Log;
 
-import com.wuwang.aavt.media.av.AvException;
+import com.wyz.common.api.IHardStore;
+import com.wyz.common.core.base.HardMediaData;
 
 import java.io.IOException;
 
@@ -29,7 +28,6 @@ import java.io.IOException;
  * @author wuwang
  * @version v1.0 2017:10:28 17:48
  */
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class Mp4MuxStore implements IHardStore {
 
     private MediaMuxer mMuxer;
@@ -51,7 +49,6 @@ public class Mp4MuxStore implements IHardStore {
                 if(mAudioTrack==-1&&mVideoTrack==-1){
                     try {
                         mMuxer=new MediaMuxer(mPath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -87,7 +84,7 @@ public class Mp4MuxStore implements IHardStore {
     public int addData(int track, HardMediaData hardMediaData) {
         boolean canMux=isMuxStart&&(track==mAudioTrack||track==mVideoTrack);
         if(canMux){
-            mMuxer.writeSampleData(track,hardMediaData.data,hardMediaData.info);
+            mMuxer.writeSampleData(track,hardMediaData.getData(),hardMediaData.getInfo());
             return 0;
         }
         return -1;
@@ -99,7 +96,7 @@ public class Mp4MuxStore implements IHardStore {
     }
 
     @Override
-    public void close() throws AvException {
+    public void close() throws Exception {
         synchronized (LOCK){
             try {
                 if(isMuxStart){
@@ -112,7 +109,7 @@ public class Mp4MuxStore implements IHardStore {
 
                 }
             }catch (IllegalStateException e){
-                throw new AvException("close muxer failed!",e);
+                throw new Exception("close muxer failed!",e);
             }
 
         }

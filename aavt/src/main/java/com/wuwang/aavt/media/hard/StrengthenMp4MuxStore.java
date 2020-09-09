@@ -2,9 +2,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *  
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,14 +13,11 @@
  */
 package com.wuwang.aavt.media.hard;
 
-import android.annotation.TargetApi;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Build;
-import android.util.Log;
 
-import com.wuwang.aavt.log.AvLog;
-import com.wuwang.aavt.media.av.AvException;
+import com.wyz.common.api.IHardStore;
+import com.wyz.common.core.base.HardMediaData;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -35,50 +32,46 @@ import java.util.concurrent.TimeUnit;
  * @author wuwang
  * @version v1.0 2017:11:08 17:15
  */
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class StrengthenMp4MuxStore implements IHardStore {
 
-    private final String tag=getClass().getSimpleName();
     private MediaMuxer mMuxer;
     private final boolean av;
     private String path;
-    private int audioTrack=-1;
-    private int videoTrack=-1;
-    private final Object Lock=new Object();
-    private boolean muxStarted=false;
+    private int audioTrack = -1;
+    private int videoTrack = -1;
+    private final Object Lock = new Object();
+    private boolean muxStarted = false;
     private LinkedBlockingQueue<HardMediaData> cache;
     private Recycler<HardMediaData> recycler;
     private ExecutorService exec;
 
-    public StrengthenMp4MuxStore(boolean av){
-        this.av=av;
-        cache=new LinkedBlockingQueue<>(30);
-        recycler=new Recycler<>();
-        exec=new ThreadPoolExecutor(1,1,1, TimeUnit.MINUTES,
-                new LinkedBlockingQueue<Runnable>(16), Executors.defaultThreadFactory() );
+    public StrengthenMp4MuxStore(boolean av) {
+        this.av = av;
+        cache = new LinkedBlockingQueue<>(30);
+        recycler = new Recycler<>();
+        exec = new ThreadPoolExecutor(1, 1, 1, TimeUnit.MINUTES,
+                new LinkedBlockingQueue<Runnable>(16), Executors.defaultThreadFactory());
     }
 
     @Override
-    public void close() throws AvException {
-        synchronized (Lock){
-            if(muxStarted){
-                audioTrack=-1;
-                videoTrack=-1;
-                muxStarted=false;
+    public void close() throws Exception {
+        synchronized (Lock) {
+            if (muxStarted) {
+                audioTrack = -1;
+                videoTrack = -1;
+                muxStarted = false;
             }
         }
     }
 
-    private void muxRun(){
-        AvLog.d(tag,"enter mux loop");
-        while (muxStarted){
+    private void muxRun() {
+        while (muxStarted) {
             try {
-                HardMediaData data=cache.poll(1, TimeUnit.SECONDS);
-                synchronized (Lock){
-                    AvLog.d(tag,"data is null?"+(data==null));
-                    if(muxStarted&&data!=null){
-                        mMuxer.writeSampleData(data.index, data.data, data.info);
-                        recycler.put(data.index,data);
+                HardMediaData data = cache.poll(1, TimeUnit.SECONDS);
+                synchronized (Lock) {
+                    if (muxStarted && data != null) {
+                        mMuxer.writeSampleData(data.getIndex(), data.getData(), data.getInfo());
+                        recycler.put(data.getIndex(), data);
                     }
                 }
             } catch (InterruptedException e) {
@@ -87,37 +80,34 @@ public class StrengthenMp4MuxStore implements IHardStore {
         }
         try {
             mMuxer.stop();
-            AvLog.d(tag,"muxer stoped success");
             mMuxer.release();
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             e.printStackTrace();
-            AvLog.e("stop muxer failed!!!");
         }
-        mMuxer=null;
+        mMuxer = null;
         cache.clear();
         recycler.clear();
     }
 
     @Override
     public int addTrack(MediaFormat mediaFormat) {
-        int ret=-1;
-        synchronized (Lock){
-            if(!muxStarted){
-                if(audioTrack==-1&&videoTrack==-1){
+        int ret = -1;
+        synchronized (Lock) {
+            if (!muxStarted) {
+                if (audioTrack == -1 && videoTrack == -1) {
                     try {
-                        mMuxer=new MediaMuxer(path,MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+                        mMuxer = new MediaMuxer(path, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        AvLog.e("create MediaMuxer failed:"+e.getMessage());
                     }
                 }
-                String mime=mediaFormat.getString(MediaFormat.KEY_MIME);
-                if(mime.startsWith("audio")){
-                    audioTrack=mMuxer.addTrack(mediaFormat);
-                    ret=audioTrack;
-                }else if(mime.startsWith("video")){
-                    videoTrack=mMuxer.addTrack(mediaFormat);
-                    ret=videoTrack;
+                String mime = mediaFormat.getString(MediaFormat.KEY_MIME);
+                if (mime.startsWith("audio")) {
+                    audioTrack = mMuxer.addTrack(mediaFormat);
+                    ret = audioTrack;
+                } else if (mime.startsWith("video")) {
+                    videoTrack = mMuxer.addTrack(mediaFormat);
+                    ret = videoTrack;
                 }
                 startMux();
             }
@@ -125,11 +115,11 @@ public class StrengthenMp4MuxStore implements IHardStore {
         return ret;
     }
 
-    private void startMux(){
-        boolean canMux=!av||(audioTrack!=-1&&videoTrack!=-1);
-        if(canMux){
+    private void startMux() {
+        boolean canMux = !av || (audioTrack != -1 && videoTrack != -1);
+        if (canMux) {
             mMuxer.start();
-            muxStarted=true;
+            muxStarted = true;
             exec.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -141,20 +131,18 @@ public class StrengthenMp4MuxStore implements IHardStore {
 
     @Override
     public int addData(int track, HardMediaData hardMediaData) {
-        if(track>=0){
-            AvLog.d(tag,"addData->"+track+"/"+audioTrack+"/"+videoTrack);
-            hardMediaData.index=track;
-            if(track==audioTrack||track==videoTrack){
-                HardMediaData d=recycler.poll(track);
-                if(d==null){
-                    d=hardMediaData.copy();
-                }else{
+        if (track >= 0) {
+            hardMediaData.setIndex(track);
+            if (track == audioTrack || track == videoTrack) {
+                HardMediaData d = recycler.poll(track);
+                if (d == null) {
+                    d = hardMediaData.copy();
+                } else {
                     hardMediaData.copyTo(d);
                 }
-                while (!cache.offer(d)){
-                    AvLog.d(tag,"put data to the cache : poll");
-                    HardMediaData c=cache.poll();
-                    recycler.put(c.index,c);
+                while (!cache.offer(d)) {
+                    HardMediaData c = cache.poll();
+                    recycler.put(c.getIndex(), c);
                 }
             }
         }
@@ -163,7 +151,7 @@ public class StrengthenMp4MuxStore implements IHardStore {
 
     @Override
     public void setOutputPath(String path) {
-        this.path=path;
+        this.path = path;
     }
 
 }

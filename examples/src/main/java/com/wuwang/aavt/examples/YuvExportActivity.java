@@ -27,10 +27,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wuwang.aavt.gl.FrameBuffer;
 import com.wuwang.aavt.gl.LazyFilter;
 import com.wuwang.aavt.gl.YuvOutputFilter;
-import com.wuwang.aavt.media.CameraProvider;
-import com.wuwang.aavt.media.RenderBean;
+import com.wuwang.aavt.media.FrameBean;
 import com.wuwang.aavt.media.SurfaceShower;
 import com.wuwang.aavt.media.VideoSurfaceProcessor;
+import com.wyz.common.core.camera.CameraProvider;
 
 /**
  * YuvExportActivity
@@ -92,7 +92,7 @@ public class YuvExportActivity extends AppCompatActivity {
         mFb=new FrameBuffer();
         mShower.setOnDrawEndListener(new SurfaceShower.OnDrawEndListener() {
             @Override
-            public void onDrawEnd(EGLSurface surface, RenderBean bean) {
+            public void onDrawEnd(EGLSurface surface, FrameBean bean) {
                 if(exportFlag){
                     if(mOutputFilter==null){
                         mOutputFilter=new YuvOutputFilter(YuvOutputFilter.EXPORT_TYPE_NV21);

@@ -17,8 +17,7 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
-import com.wuwang.aavt.utils.GpuUtils;
-import com.wuwang.aavt.utils.MatrixUtils;
+import com.wyz.common.utils.TextureUtils;
 
 /**
  * WaterMarkFilter
@@ -59,7 +58,7 @@ public class WaterMarkFilter extends LazyFilter{
             public void run() {
                 if(bmp!=null){
                     if(markTextureId==-1){
-                        markTextureId=GpuUtils.createTextureID(false);
+                        markTextureId= TextureUtils.Companion.createTextureID(false);
                     }else{
                         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,markTextureId);
                     }

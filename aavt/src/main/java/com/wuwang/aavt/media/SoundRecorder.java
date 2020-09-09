@@ -11,14 +11,13 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.wuwang.aavt.log.AvLog;
-import com.wuwang.aavt.media.hard.HardMediaData;
-import com.wuwang.aavt.media.hard.IHardStore;
+import com.wyz.common.api.IHardStore;
+import com.wyz.common.core.base.HardMediaData;
+import com.wyz.common.utils.CodecUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /*
  * Created by Wuwang on 2017/10/26
@@ -70,7 +69,6 @@ public class SoundRecorder {
                 public void run() {
                     while (!stopFlag&&!audioEncodeStep(false)){};
                     audioEncodeStep(true);
-                    Log.e("wuwang","audio stop");
                     if(isStarted){
                         mRecord.stop();
                         mRecord.release();
@@ -92,10 +90,9 @@ public class SoundRecorder {
 
     private synchronized boolean audioEncodeStep(boolean isEnd){
         if(isStarted){
-            AvLog.d("audioEncodeStep");
             int inputIndex=mAudioEncoder.dequeueInputBuffer(TIME_OUT);
             if(inputIndex>=0){
-                ByteBuffer buffer= CodecUtil.getInputBuffer(mAudioEncoder,inputIndex);
+                ByteBuffer buffer= CodecUtil.Companion.getInputBuffer(mAudioEncoder,inputIndex);
                 buffer.clear();
                 long time= (SystemClock.elapsedRealtimeNanos()-startTime)/1000;
                 int length=mRecord.read(buffer,mRecordBufferSize);
@@ -109,18 +106,16 @@ public class SoundRecorder {
                 int outputIndex=mAudioEncoder.dequeueOutputBuffer(info,TIME_OUT);
                 if(outputIndex>=0){
                     if(mStore!=null){
-                        mStore.addData(mAudioTrack,new HardMediaData(CodecUtil.getOutputBuffer(mAudioEncoder,outputIndex),info));
+                        mStore.addData(mAudioTrack,new HardMediaData(CodecUtil.Companion.getOutputBuffer(mAudioEncoder,outputIndex),info));
                     }
                     mAudioEncoder.releaseOutputBuffer(outputIndex,false);
                     if(info.flags==MediaCodec.BUFFER_FLAG_END_OF_STREAM){
-                        AvLog.d("CameraRecorder get audio encode end of stream");
                         stop();
                         return true;
                     }
                 }else if(outputIndex==MediaCodec.INFO_TRY_AGAIN_LATER){
                     break;
                 }else if(outputIndex==MediaCodec.INFO_OUTPUT_FORMAT_CHANGED){
-                    AvLog.d("get audio output format changed ->"+mAudioEncoder.getOutputFormat().toString());
                     mAudioTrack=mStore.addTrack(mAudioEncoder.getOutputFormat());
                 }
             }

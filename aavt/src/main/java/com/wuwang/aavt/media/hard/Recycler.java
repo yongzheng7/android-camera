@@ -20,8 +20,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Recycler
  *
- * @author wuwang
- * @version v1.0 2017:11:08 16:16
  */
 class Recycler<T> {
 

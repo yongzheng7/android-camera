@@ -1,11 +1,13 @@
 package com.wuwang.aavt.examples;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -15,16 +17,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wuwang.aavt.av.CameraRecorder2;
-import com.wuwang.aavt.gl.BaseFilter;
+import com.wuwang.aavt.av.CameraRecorder;
 import com.wuwang.aavt.gl.BeautyFilter;
-import com.wuwang.aavt.gl.BlackMagicFilter;
-import com.wuwang.aavt.gl.GrayFilter;
 import com.wuwang.aavt.gl.GroupFilter;
-import com.wuwang.aavt.gl.LazyFilter;
 import com.wuwang.aavt.gl.StickFigureFilter;
 import com.wuwang.aavt.gl.WaterMarkFilter;
-import com.wuwang.aavt.utils.MatrixUtils;
 
 public class CameraRecorderActivity extends AppCompatActivity {
 
@@ -34,33 +31,33 @@ public class CameraRecorderActivity extends AppCompatActivity {
     private boolean isRecordOpen=false;
     private int mCameraWidth,mCameraHeight;
 
-    private CameraRecorder2 mCamera;
+    private CameraRecorder mCamera;
 
     private String tempPath= Environment.getExternalStorageDirectory().getAbsolutePath()+"/test.mp4";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.e("CameraActivity" ,"onCreate ->");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_record);
         mSurfaceView=  findViewById(R.id.mSurfaceView);
         mTvRecord=  findViewById(R.id.mTvRec);
         mTvPreview=  findViewById(R.id.mTvShow);
 
-        mCamera =new CameraRecorder2();
-        mCamera.setOutputPath(tempPath);
-
+        mCamera =new CameraRecorder();
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-//                GroupFilter filter=new GroupFilter(getResources());
-//                mCamera.setRenderer(filter);
-//                filter.addFilter(new StickFigureFilter(getResources()));
-//                filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
-//                filter.addFilter(new WaterMarkFilter().setMarkPosition(30,10,100,76).setMark(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)));
+                GroupFilter filter=new GroupFilter(getResources());
+                mCamera.setRenderer(filter);
+                //filter.addFilter(new StickFigureFilter(getResources()));
+                filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
+                filter.addFilter(new WaterMarkFilter().setMarkPosition(30,10,100,76).setMark(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)));
             }
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                mCamera.setOutputPath(tempPath);
                 mCamera.open();
                 mCamera.setSurface(holder.getSurface());
                 mCamera.setPreviewSize(width, height);

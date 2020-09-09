@@ -1,20 +1,17 @@
 package com.wuwang.aavt.media;
 
-import android.annotation.TargetApi;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
-import android.os.Build;
-import android.util.Log;
 import android.view.Surface;
 
-import com.wuwang.aavt.log.AvLog;
-import com.wuwang.aavt.media.av.AvException;
-import com.wuwang.aavt.media.hard.HardMediaData;
-import com.wuwang.aavt.media.hard.IHardStore;
+import com.wyz.common.api.IHardStore;
+import com.wyz.common.api.ITextureProvider;
+import com.wyz.common.core.base.HardMediaData;
+import com.wyz.common.utils.CodecUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +21,6 @@ import java.util.concurrent.Semaphore;
 /**
  * @author wuwang
  */
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class Mp4Provider implements ITextureProvider {
 
     private final String tag=getClass().getSimpleName();
@@ -106,7 +102,7 @@ public class Mp4Provider implements ITextureProvider {
     private boolean videoDecodeStep(){
         int mInputIndex=mVideoDecoder.dequeueInputBuffer(TIME_OUT);
         if(mInputIndex>=0){
-            ByteBuffer buffer= CodecUtil.getInputBuffer(mVideoDecoder,mInputIndex);
+            ByteBuffer buffer= CodecUtil.Companion.getInputBuffer(mVideoDecoder,mInputIndex);
             buffer.clear();
             synchronized (Extractor_LOCK) {
                 mExtractor.selectTrack(mVideoDecodeTrack);
@@ -154,7 +150,6 @@ public class Mp4Provider implements ITextureProvider {
             public void run() {
                 while (!videoDecodeStep()){}
                 if(videoDecodeBufferInfo.flags!=MediaCodec.BUFFER_FLAG_END_OF_STREAM){
-                    AvLog.d(tag,"video ------------------ end");
                     videoProvideEndFlag=true;
 //                    try {
 //                        mDecodeSem.acquire();
@@ -168,14 +163,12 @@ public class Mp4Provider implements ITextureProvider {
                 mVideoDecoder.stop();
                 mVideoDecoder.release();
                 mVideoDecoder=null;
-                AvLog.d(tag,"audioStart");
                 audioDecodeStep();
-                AvLog.d(tag,"audioStop");
                 mExtractor.release();
                 mExtractor=null;
                 try {
                     mStore.close();
-                } catch (AvException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -200,15 +193,12 @@ public class Mp4Provider implements ITextureProvider {
                     info.flags=isAudioEnd?MediaCodec.BUFFER_FLAG_END_OF_STREAM:flags;
                     info.presentationTimeUs=mExtractor.getSampleTime();
                     info.offset=0;
-                    AvLog.d(tag,"audio sampleTime= "+info.presentationTimeUs+"/"+mVideoStopTimeStamp);
                     isTimeEnd=mExtractor.getSampleTime()>mVideoStopTimeStamp;
-                    AvLog.d(tag,"is End= "+isAudioEnd );
                     mStore.addData(mAudioEncodeTrack,new HardMediaData(buffer,info));
                     if(isAudioEnd){
                         break;
                     }
                 }else{
-                    AvLog.d(tag,"is End= "+true );
                     info.size=0;
                     info.flags=MediaCodec.BUFFER_FLAG_END_OF_STREAM;
                     mStore.addData(mAudioEncodeTrack,new HardMediaData(buffer,info));

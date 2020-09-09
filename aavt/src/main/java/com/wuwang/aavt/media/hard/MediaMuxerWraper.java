@@ -13,7 +13,6 @@
  */
 package com.wuwang.aavt.media.hard;
 
-import android.annotation.TargetApi;
 import android.media.MediaCodec;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
@@ -22,7 +21,8 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.wuwang.aavt.log.AvLog;
+
+import com.wyz.common.core.base.HardMediaData;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -40,7 +40,6 @@ import java.util.concurrent.TimeUnit;
  * @author wuwang
  * @version v1.0 2017:11:08 11:07
  */
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class MediaMuxerWraper{
 
     private final String tag=getClass().getSimpleName();
@@ -64,18 +63,16 @@ public class MediaMuxerWraper{
         while (isStarted){
             try {
                 HardMediaData data=datas.poll(1, TimeUnit.SECONDS);
-                AvLog.d(tag,"get HardMediaData from the queue");
                 synchronized (Lock){
                     if(isStarted){
-                        mMuxer.writeSampleData(data.index, data.data, data.info);
-                        recycler.put(data.index,data);
+                        mMuxer.writeSampleData(data.getIndex(), data.getData(), data.getInfo());
+                        recycler.put(data.getIndex(),data);
                     }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        AvLog.d(tag,"end -->");
         mMuxer.stop();
         mMuxer.release();
         datas.clear();
@@ -120,19 +117,16 @@ public class MediaMuxerWraper{
             ByteBuffer buffer=ByteBuffer.allocate(byteBuf.capacity());
             MediaCodec.BufferInfo info=new MediaCodec.BufferInfo();
             hmd=new HardMediaData(buffer,info);
-            AvLog.d(tag,"buffer Size->"+buffer.capacity());
         }
-        AvLog.i(tag,"buffer Size->"+hmd.data.capacity()+"/data size:"+bufferInfo.size);
-        hmd.data.position(0);
-        hmd.data.put(byteBuf);
-        hmd.info.set(bufferInfo.offset,bufferInfo.size,bufferInfo.presentationTimeUs,bufferInfo.flags);
-        hmd.index=trackIndex;
+        hmd.getData().position(0);
+        hmd.getData().put(byteBuf);
+        hmd.getInfo().set(bufferInfo.offset,bufferInfo.size,bufferInfo.presentationTimeUs,bufferInfo.flags);
+        hmd.setIndex(trackIndex);
         datas.offer(hmd);
     }
 
     public int addTrack(@NonNull MediaFormat format){
         indexCount++;
-        AvLog.d(tag,"addTrack  -->"+indexCount);
         return mMuxer.addTrack(format);
     }
 

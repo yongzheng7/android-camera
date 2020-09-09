@@ -16,9 +16,10 @@ package com.wuwang.aavt.gl;
 import android.content.res.Resources;
 import android.opengl.GLES20;
 
-import com.wuwang.aavt.core.Renderer;
-import com.wuwang.aavt.utils.GpuUtils;
-import com.wuwang.aavt.utils.MatrixUtils;
+
+import com.wyz.common.api.Renderer;
+import com.wyz.common.utils.MatrixUtils;
+import com.wyz.common.utils.ShaderUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -50,8 +51,8 @@ public abstract class BaseFilter implements Renderer {
             "    vTextureCo = (uTextureMatrix*vec4(aTextureCo,0,1)).xy;\n" +
             "}";
 
-    private float[] mVertexMatrix= MatrixUtils.getOriginalMatrix();
-    private float[] mTextureMatrix=MatrixUtils.getOriginalMatrix();
+    private float[] mVertexMatrix= MatrixUtils.Companion.getOriginalMatrix();
+    private float[] mTextureMatrix=MatrixUtils.Companion.getOriginalMatrix();
 
     protected FloatBuffer mVertexBuffer;
     protected FloatBuffer mTextureBuffer;
@@ -89,12 +90,12 @@ public abstract class BaseFilter implements Renderer {
         ByteBuffer vertex=ByteBuffer.allocateDirect(32);
         vertex.order(ByteOrder.nativeOrder());
         mVertexBuffer=vertex.asFloatBuffer();
-        mVertexBuffer.put(MatrixUtils.getOriginalVertexCo());
+        mVertexBuffer.put(MatrixUtils.Companion.getOriginalVertexCo());
         mVertexBuffer.position(0);
         ByteBuffer texture=ByteBuffer.allocateDirect(32);
         texture.order(ByteOrder.nativeOrder());
         mTextureBuffer=texture.asFloatBuffer();
-        mTextureBuffer.put(MatrixUtils.getOriginalTextureCo());
+        mTextureBuffer.put(MatrixUtils.Companion.getOriginalTextureCo());
         mTextureBuffer.position(0);
     }
 
@@ -140,9 +141,9 @@ public abstract class BaseFilter implements Renderer {
 
     protected void onCreate(){
         if(mRes!=null){
-            mGLProgram= GpuUtils.createGLProgramByAssetsFile(mRes,mVertex,mFragment);
+            mGLProgram= ShaderUtils.Companion.createGLProgramByAssetsFile(mRes,mVertex,mFragment);
         }else{
-            mGLProgram= GpuUtils.createGLProgram(mVertex,mFragment);
+            mGLProgram= ShaderUtils.Companion.createGLProgram(mVertex,mFragment);
         }
         mGLVertexCo= GLES20.glGetAttribLocation(mGLProgram,"aVertexCo");
         mGLTextureCo=GLES20.glGetAttribLocation(mGLProgram,"aTextureCo");

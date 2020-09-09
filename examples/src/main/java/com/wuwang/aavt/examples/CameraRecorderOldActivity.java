@@ -1,18 +1,12 @@
 package com.wuwang.aavt.examples;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,15 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wuwang.aavt.av.CameraRecorder;
-import com.wuwang.aavt.av.CameraRecorder2;
-import com.wuwang.aavt.gl.BeautyFilter;
-import com.wuwang.aavt.gl.GroupFilter;
-import com.wuwang.aavt.gl.StickFigureFilter;
-import com.wuwang.aavt.gl.WaterMarkFilter;
-
-import java.io.IOException;
-import java.util.List;
+import com.wyz.core.CameraView;
 
 public class CameraRecorderOldActivity extends AppCompatActivity {
 
@@ -41,6 +27,7 @@ public class CameraRecorderOldActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("com_wyz_CameraActivity" ,"onCreate ->");
         setContentView(R.layout.activity_camera_record_old);
         mSurfaceView = findViewById(R.id.mSurfaceViewtest);
         mTvRecord = findViewById(R.id.mTvRec);
@@ -86,4 +73,9 @@ public class CameraRecorderOldActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 }
