@@ -16,10 +16,10 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.Surface;
 
-import com.wuwang.aavt.gl.BaseFilter;
-import com.wuwang.aavt.gl.FrameBuffer;
-import com.wuwang.aavt.gl.LazyFilter;
-import com.wuwang.aavt.media.WrapRenderer;
+import com.wyz.common.gl.BaseFilter;
+import com.wyz.common.gl.FrameBuffer;
+import com.wyz.common.gl.LazyFilter;
+import com.wyz.common.gl.WrapRenderer;
 import com.wyz.common.api.Renderer;
 import com.wyz.common.core.egl.EGLConfigAttrs;
 import com.wyz.common.core.egl.EGLContextAttrs;

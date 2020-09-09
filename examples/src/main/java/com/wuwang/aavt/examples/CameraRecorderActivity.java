@@ -18,10 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wuwang.aavt.av.CameraRecorder;
-import com.wuwang.aavt.gl.BeautyFilter;
-import com.wuwang.aavt.gl.GroupFilter;
-import com.wuwang.aavt.gl.StickFigureFilter;
-import com.wuwang.aavt.gl.WaterMarkFilter;
+import com.wyz.common.gl.BeautyFilter;
+import com.wyz.common.gl.GroupFilter;
+import com.wyz.common.gl.WaterMarkFilter;
 
 public class CameraRecorderActivity extends AppCompatActivity {
 

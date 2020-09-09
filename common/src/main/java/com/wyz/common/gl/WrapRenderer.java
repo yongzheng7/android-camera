@@ -11,9 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wuwang.aavt.media;
+package com.wyz.common.gl;
 
-import com.wuwang.aavt.gl.OesFilter;
 import com.wyz.common.api.Renderer;
 
 

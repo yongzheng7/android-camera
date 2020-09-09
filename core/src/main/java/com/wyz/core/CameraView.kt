@@ -15,7 +15,7 @@ import android.view.Surface
 import android.view.TextureView
 import android.view.TextureView.SurfaceTextureListener
 import com.wuwang.aavt.av.old.CameraRecorder
-import com.wuwang.aavt.gl.GroupFilter
+import com.wyz.common.gl.GroupFilter
 import com.wyz.common.api.Renderer
 import com.wyz.common.utils.MatrixUtils
 import java.io.File

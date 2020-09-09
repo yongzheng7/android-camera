@@ -11,28 +11,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wuwang.aavt.media;
+package com.wyz.common.gl;
 
-import com.wyz.common.core.egl.EGLHelper;
+import android.content.res.Resources;
 
 /**
- * RenderBean
+ * BlackMagicFilter 黑魔法滤镜，sobel算法实现
  *
  * @author wuwang
- * @version v1.0 2017:10:27 15:02
+ * @version v1.0 2017:10:31 11:47
  */
-public class FrameBean {
+public class BlackMagicFilter extends GroupFilter {
 
-    public EGLHelper egl;
-    public int sourceWidth;
-    public int sourceHeight;
-    public int textureId;
-    public boolean endFlag;
+    public BlackMagicFilter(Resources resources){
+        super(resources);
+    }
 
-    public long timeStamp;
-    public long textureTime;
-
-    public long threadId;
-
+    @Override
+    protected void initBuffer() {
+        super.initBuffer();
+        addFilter(new GrayFilter(mRes));
+        addFilter(new BaseFuncFilter(mRes,BaseFuncFilter.FILTER_SOBEL));
+    }
 }
 

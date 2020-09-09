@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wuwang.aavt.gl;
+package com.wyz.common.gl;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES20;

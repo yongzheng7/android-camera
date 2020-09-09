@@ -1,17 +1,16 @@
-package com.wyz.core
+package com.wyz.common.core
 
 import android.graphics.SurfaceTexture
 import android.opengl.EGL14
 import android.opengl.GLES20
-import com.wuwang.aavt.gl.FrameBuffer
-import com.wuwang.aavt.media.FrameBean
-import com.wuwang.aavt.media.WrapRenderer
 import com.wyz.common.api.ITextureProvider
 import com.wyz.common.api.Renderer
-import com.wyz.common.core.Observable
+import com.wyz.common.core.base.FrameBean
 import com.wyz.common.core.egl.EGLConfigAttrs
 import com.wyz.common.core.egl.EGLContextAttrs
 import com.wyz.common.core.egl.EGLHelper
+import com.wyz.common.gl.FrameBuffer
+import com.wyz.common.gl.WrapRenderer
 import com.wyz.common.utils.TextureUtils.Companion.createTextureID
 
 class SurfaceProcessor {

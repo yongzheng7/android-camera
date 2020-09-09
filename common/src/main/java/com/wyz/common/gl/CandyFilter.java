@@ -1,4 +1,4 @@
-package com.wuwang.aavt.gl;
+package com.wyz.common.gl;
 
 import android.content.res.Resources;
 

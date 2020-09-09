@@ -14,11 +14,11 @@
 package com.wuwang.aavt.av;
 
 import com.wuwang.aavt.media.Mp4Provider;
-import com.wuwang.aavt.media.SurfaceEncoder;
-import com.wuwang.aavt.media.SurfaceShower;
 import com.wuwang.aavt.media.VideoSurfaceProcessor;
 import com.wuwang.aavt.media.hard.StrengthenMp4MuxStore;
 import com.wyz.common.api.IHardStore;
+import com.wyz.common.core.FrameEncoder;
+import com.wyz.common.core.FrameShower;
 
 /**
  * Mp4Processor2 用于处理Mp4文件
@@ -27,8 +27,8 @@ public class Mp4Processor {
 
     private VideoSurfaceProcessor mTextureProcessor;
     private Mp4Provider mMp4Provider;
-    private SurfaceShower mShower;
-    private SurfaceEncoder mSurfaceStore;
+    private FrameShower mShower;
+    private FrameEncoder mSurfaceStore;
     private IHardStore mMuxer;
 
     public Mp4Processor(){
@@ -36,11 +36,11 @@ public class Mp4Processor {
         mMuxer=new StrengthenMp4MuxStore(true);
 
         //用于预览图像
-        mShower=new SurfaceShower();
+        mShower=new FrameShower();
         mShower.setOutputSize(720,1280);
 
         //用于编码图像
-        mSurfaceStore=new SurfaceEncoder();
+        mSurfaceStore=new FrameEncoder();
         mSurfaceStore.setStore(mMuxer);
 
         //用于音频

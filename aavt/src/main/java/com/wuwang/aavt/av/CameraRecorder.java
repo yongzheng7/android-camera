@@ -15,14 +15,14 @@ package com.wuwang.aavt.av;
 
 
 
-import com.wuwang.aavt.media.SurfaceEncoder;
-import com.wuwang.aavt.media.SoundRecorder;
-import com.wuwang.aavt.media.SurfaceShower;
 import com.wuwang.aavt.media.VideoSurfaceProcessor;
 
 
 import com.wyz.common.api.IHardStore;
 import com.wyz.common.api.Renderer;
+import com.wyz.common.core.FrameEncoder;
+import com.wyz.common.core.FrameShower;
+import com.wyz.common.core.SoundRecorder;
 import com.wyz.common.core.camera.CameraProvider;
 import com.wyz.common.core.mux.StrengthenMp4MuxStore;
 
@@ -35,18 +35,18 @@ public class CameraRecorder {
 
     private IHardStore mMuxer;
 
-    private SurfaceShower mShower;
-    private SurfaceEncoder mSurfaceStore;
+    private FrameShower mShower;
+    private FrameEncoder mSurfaceStore;
     private SoundRecorder mSoundRecord;
 
     public CameraRecorder() {
         //用于视频混流和存储
         mMuxer = new StrengthenMp4MuxStore(true); // 存储消费中进行编码的工具
         //用于预览图像
-        mShower = new SurfaceShower(); // 展示消费
+        mShower = new FrameShower(); // 展示消费
         mShower.setOutputSize(720, 1280); // 设置输出大小 可以后期调整为自定义获取机器的大小
         //用于编码图像
-        mSurfaceStore = new SurfaceEncoder(); // 保存消费
+        mSurfaceStore = new FrameEncoder(); // 保存消费
         mSurfaceStore.setStore(mMuxer); // 视频设置编码工具
         //用于音频
         mSoundRecord = new SoundRecorder(mMuxer);// 音频设置编码工具

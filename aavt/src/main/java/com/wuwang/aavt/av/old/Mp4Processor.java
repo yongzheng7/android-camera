@@ -11,7 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Surface;
 
-import com.wuwang.aavt.media.WrapRenderer;
+import com.wyz.common.gl.WrapRenderer;
 import com.wyz.common.api.Renderer;
 import com.wyz.common.core.egl.EGLConfigAttrs;
 import com.wyz.common.core.egl.EGLContextAttrs;

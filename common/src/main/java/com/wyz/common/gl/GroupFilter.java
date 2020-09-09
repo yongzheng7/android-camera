@@ -11,13 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wuwang.aavt.gl;
+package com.wyz.common.gl;
 
 import android.content.res.Resources;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * GroupFilter 滤镜组，将多个滤镜串联起来，合并成一个滤镜

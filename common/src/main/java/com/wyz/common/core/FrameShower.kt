@@ -1,12 +1,12 @@
-package com.wyz.core
+package com.wyz.common.core
 
 import android.opengl.EGLSurface
 import android.opengl.GLES20
-import com.wuwang.aavt.gl.BaseFilter
-import com.wuwang.aavt.gl.LazyFilter
 import com.wyz.common.api.FrameDrawedListener
 import com.wyz.common.api.IObserver
 import com.wyz.common.core.base.FrameBean
+import com.wyz.common.gl.BaseFilter
+import com.wyz.common.gl.LazyFilter
 import com.wyz.common.utils.MatrixUtils.Companion.TYPE_CENTERCROP
 import com.wyz.common.utils.MatrixUtils.Companion.flip
 import com.wyz.common.utils.MatrixUtils.Companion.getMatrix

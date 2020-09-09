@@ -1,10 +1,10 @@
-package com.wyz.core
+package com.wyz.common.core
 
 import android.media.*
 import android.os.SystemClock
-import com.wuwang.aavt.media.MediaConfig
 import com.wyz.common.api.IHardStore
 import com.wyz.common.core.base.HardMediaData
+import com.wyz.common.core.base.MediaConfig
 import com.wyz.common.utils.CodecUtil
 import java.io.IOException
 import java.util.concurrent.Executors
@@ -38,7 +38,7 @@ class SoundRecorder {
             mRecord = AudioRecord(MediaRecorder.AudioSource.MIC, mRecordSampleRate, mRecordChannelConfig, mRecordAudioFormat, mRecordBufferSize)
             mRecord?.startRecording()
             try {
-                val format = convertAudioConfigToFormat(mConfig.mAudio)
+                val format = convertAudioConfigToFormat(mConfig.getAudio())
                 mAudioEncoder = MediaCodec.createEncoderByType(format.getString(MediaFormat.KEY_MIME)!!)
                 mAudioEncoder?.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
                 mAudioEncoder?.start()

@@ -18,7 +18,9 @@ import android.graphics.SurfaceTexture;
 import android.opengl.EGL14;
 import android.opengl.GLES20;
 
-import com.wuwang.aavt.gl.FrameBuffer;
+import com.wyz.common.core.base.FrameBean;
+import com.wyz.common.gl.FrameBuffer;
+import com.wyz.common.gl.WrapRenderer;
 import com.wyz.common.api.IObserver;
 import com.wyz.common.api.ITextureProvider;
 import com.wyz.common.api.Renderer;
@@ -134,11 +136,11 @@ public class VideoSurfaceProcessor{
 
         //用于其他的回调
         FrameBean rb=new FrameBean();
-        rb.egl=egl;
-        rb.sourceWidth= mSourceWidth;
-        rb.sourceHeight= mSourceHeight;
-        rb.endFlag=false;
-        rb.threadId=Thread.currentThread().getId();
+        rb.setEgl(egl);
+        rb.setSourceWidth(mSourceWidth);
+        rb.setSourceHeight(mSourceHeight);
+        rb.setEndFlag(false);
+        rb.setThreadId(Thread.currentThread().getId());
         //要求数据源必须同步填充SurfaceTexture，填充完成前等待
         while (!mProvider.frame()&&mGLThreadFlag){
             mInputSurfaceTexture.updateTexImage();
@@ -149,13 +151,13 @@ public class VideoSurfaceProcessor{
             mRenderer.draw(mInputSurfaceTextureId);
             sourceFrame.unBindFrameBuffer();
             //接收数据源传入的时间戳
-            rb.textureId=sourceFrame.getCacheTextureId();
-            rb.timeStamp=mProvider.getTimeStamp();
-            rb.textureTime= mInputSurfaceTexture.getTimestamp();
+            rb.setTextureId(sourceFrame.getCacheTextureId());
+            rb.setTimeStamp(mProvider.getTimeStamp());
+            rb.setTextureTime(mInputSurfaceTexture.getTimestamp());
             observable.notify(rb);
         }
         synchronized (LOCK){
-            rb.endFlag=true;
+            rb.setEndFlag(true);
             observable.notify(rb);
             mRenderer.destroy();
             destroyGL(egl);

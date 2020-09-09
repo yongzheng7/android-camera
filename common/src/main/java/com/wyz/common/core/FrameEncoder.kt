@@ -1,14 +1,14 @@
-package com.wyz.core
+package com.wyz.common.core
 
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaFormat
 import android.opengl.EGLSurface
-import com.wuwang.aavt.media.MediaConfig
 import com.wyz.common.api.FrameDrawedListener
 import com.wyz.common.api.IHardStore
 import com.wyz.common.core.base.FrameBean
 import com.wyz.common.core.base.HardMediaData
+import com.wyz.common.core.base.MediaConfig
 import com.wyz.common.utils.CodecUtil
 import java.io.IOException
 
@@ -61,8 +61,8 @@ class FrameEncoder : FrameShower {
 
     override fun setOutputSize(width: Int, height: Int) {
         super.setOutputSize(width, height)
-        mConfig.mVideo.width = width
-        mConfig.mVideo.height = height
+        mConfig.getVideo().width = width
+        mConfig.getVideo().height = height
     }
 
     protected fun convertVideoConfigToFormat(config: MediaConfig.Video): MediaFormat {
@@ -77,11 +77,11 @@ class FrameEncoder : FrameShower {
     private fun openVideoEncoder() {
         if (mVideoEncoder == null) {
             try {
-                mVideoEncoder = MediaCodec.createEncoderByType(mConfig.mVideo.mime).also { it ->
-                    it.configure(convertVideoConfigToFormat(mConfig.mVideo),
+                mVideoEncoder = MediaCodec.createEncoderByType(mConfig.getVideo().mime).also { it ->
+                    it.configure(convertVideoConfigToFormat(mConfig.getVideo()),
                             null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
                     super.setSurface(it.createInputSurface())
-                    super.setOutputSize(mConfig.mVideo.width, mConfig.mVideo.height)
+                    super.setOutputSize(mConfig.getVideo().width, mConfig.getVideo().height)
                     it.start()
                     isEncodeStarted = true
                     it

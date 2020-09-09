@@ -2,7 +2,7 @@
  * Created by Wuwang on 2017/9/11
  * Copyright © 2017年 深圳哎吖科技. All rights reserved.
  */
-package com.wuwang.aavt.gl;
+package com.wyz.common.gl;
 
 import android.annotation.TargetApi;
 import android.content.res.Resources;
