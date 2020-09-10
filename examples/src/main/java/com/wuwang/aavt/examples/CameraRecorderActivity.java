@@ -17,10 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wuwang.aavt.av.CameraRecorder;
-import com.wyz.common.gl.BeautyFilter;
-import com.wyz.common.gl.GroupFilter;
-import com.wyz.common.gl.WaterMarkFilter;
+import com.wyz.common.CameraRecorder;
+import com.wyz.common.core.gl.GroupShader;
+import com.wyz.common.core.gl.mark.WaterMarkShader;
+
 
 public class CameraRecorderActivity extends AppCompatActivity {
 
@@ -47,11 +47,11 @@ public class CameraRecorderActivity extends AppCompatActivity {
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                GroupFilter filter=new GroupFilter(getResources());
+                GroupShader filter=new GroupShader(getResources());
                 mCamera.setRenderer(filter);
                 //filter.addFilter(new StickFigureFilter(getResources()));
-                filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
-                filter.addFilter(new WaterMarkFilter().setMarkPosition(30,10,100,76).setMark(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)));
+                //filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
+                filter.addFilter(new WaterMarkShader().setMarkPosition(30,10,100,76).setMark(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)));
             }
 
             @Override

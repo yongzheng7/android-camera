@@ -25,13 +25,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wyz.common.api.FrameDrawedListener;
-import com.wyz.common.core.FrameShower;
+import com.wyz.common.core.gl.LazyShader;
+import com.wyz.common.core.gl.yuv.YuvOutputShader;
+import com.wyz.common.core.processor.SurfaceProcessor;
+import com.wyz.common.core.texture.consume.FrameShower;
 import com.wyz.common.core.base.FrameBean;
-import com.wyz.common.gl.FrameBuffer;
-import com.wyz.common.gl.LazyFilter;
-import com.wyz.common.gl.YuvOutputFilter;
-import com.wuwang.aavt.media.VideoSurfaceProcessor;
-import com.wyz.common.core.camera.CameraProvider;
+import com.wyz.common.core.base.FrameBuffer;
+import com.wyz.common.core.texture.provider.CameraProvider;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,12 +43,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class YuvExportActivity extends AppCompatActivity {
 
-    private VideoSurfaceProcessor mProcessor;
+    private SurfaceProcessor mProcessor;
     private CameraProvider mProvider;
     private FrameShower mShower;
     private FrameBuffer mFb;
-    private YuvOutputFilter mOutputFilter;
-    private LazyFilter mCutScene;
+    private YuvOutputShader mOutputFilter;
+    private LazyShader mCutScene;
     private byte[] tempBuffer;
     private boolean exportFlag=false;
     private ImageView mImage;
@@ -89,7 +89,7 @@ public class YuvExportActivity extends AppCompatActivity {
     private void cameraInit(){
         mShower=new FrameShower();
         mProvider=new CameraProvider();
-        mProcessor=new VideoSurfaceProcessor();
+        mProcessor=new SurfaceProcessor();
         mProcessor.setTextureProvider(mProvider);
         mProcessor.addObserver(mShower);
         mFb=new FrameBuffer();
@@ -98,7 +98,7 @@ public class YuvExportActivity extends AppCompatActivity {
             public void onDrawEnd( EGLSurface surface, @NotNull FrameBean bean) {
                 if(exportFlag){
                     if(mOutputFilter==null){
-                        mOutputFilter=new YuvOutputFilter(YuvOutputFilter.EXPORT_TYPE_NV21);
+                        mOutputFilter=new YuvOutputShader(YuvOutputShader.Companion.getEXPORT_TYPE_NV21());
                         mOutputFilter.create();
                         mOutputFilter.sizeChanged(picX,picY);
                         mOutputFilter.setInputTextureSize(bean.getSourceWidth(),bean.getSourceHeight());

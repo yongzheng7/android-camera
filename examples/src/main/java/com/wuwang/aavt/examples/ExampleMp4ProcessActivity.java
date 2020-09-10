@@ -17,19 +17,20 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wuwang.aavt.av.Mp4Processor;
+import com.wyz.common.core.processor.VideoProcessor;
+
 
 public class ExampleMp4ProcessActivity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
-    private Mp4Processor mMp4Processor;
+    private VideoProcessor mMp4Processor;
     private String tempPath= Environment.getExternalStorageDirectory().getAbsolutePath()+"/test.mp4";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mp4);
-        mMp4Processor=new Mp4Processor();
+        mMp4Processor=new VideoProcessor();
         mMp4Processor.setInputPath(Environment.getExternalStorageDirectory().getAbsolutePath()+"/a.mp4");
         mMp4Processor.setOutputPath(tempPath);
         mSurfaceView= (SurfaceView) findViewById(R.id.mSurfaceView);

@@ -1,3 +1,2 @@
 include ':common'
-include ':core'
-include ':examples', ':aavt'
+include ':examples'

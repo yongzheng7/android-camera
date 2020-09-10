@@ -1,6 +1,7 @@
 package com.wyz.common.api
 
-interface IStore<Track,Data> : ICloseable {
+
+interface IStore<Track, Data> : ICloseable {
     /**
      * 增加存储轨道
      * @param track 待存储的内容信息
@@ -14,5 +15,6 @@ interface IStore<Track,Data> : ICloseable {
      * @param data 存储内容，包括内容信息
      * @return 写入结果
      */
-    fun addData(track: Int, data: Data): Int
+    fun addData(track: Int, data: Data)
+
 }

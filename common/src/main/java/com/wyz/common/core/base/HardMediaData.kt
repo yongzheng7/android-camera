@@ -4,7 +4,7 @@ import android.media.MediaCodec
 import java.nio.ByteBuffer
 
 class HardMediaData {
-    var index = -1
+    var track = -1
     var data: ByteBuffer
     var info: MediaCodec.BufferInfo
 
@@ -14,7 +14,7 @@ class HardMediaData {
     }
 
     fun copyTo(data: HardMediaData) : HardMediaData {
-        data.index = index
+        data.track = track
         data.data.position(0)
         data.data.put(this.data)
         data.info.set(info.offset, info.size, info.presentationTimeUs, info.flags)
