@@ -4,6 +4,7 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaFormat
 import android.opengl.EGLSurface
+import android.util.Log
 import com.wyz.common.api.FrameDrawedListener
 import com.wyz.common.api.IHardStore
 import com.wyz.common.core.base.FrameBean
@@ -39,7 +40,10 @@ class FrameEncoder : FrameShower {
                     bean.egl?.setPresentationTime(surface, bean.textureTime - startTime)
                 }
                 videoEncodeStep(false)
+                Log.e("takePictures", " 1 ")
                 mListener?.onDrawEnd(surface, bean)
+                Log.e("takePictures", " 10 ")
+
             }
         })
         this.mStore = store
@@ -132,6 +136,7 @@ class FrameEncoder : FrameShower {
         openVideoEncoder()
         super.open()
     }
+
 
     override fun close() {
         super.close()

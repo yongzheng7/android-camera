@@ -35,6 +35,9 @@
         <activity android:name=".CameraRecorderOldActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".CameraRecorder2Activity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".YuvExportActivity"
             android:screenOrientation="portrait">
         </activity>

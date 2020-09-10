@@ -1,6 +1,8 @@
 package com.wyz.common.core.egl
 
 import android.opengl.*
+import javax.microedition.khronos.egl.EGL10
+
 
 class EGLHelper {
 
@@ -77,14 +79,14 @@ class EGLHelper {
         if (mEGLSurface === EGL14.EGL_NO_SURFACE) {
             return false
         }
-        if (!EGL14.eglMakeCurrent(mEGLDisplay, mEGLSurface, mEGLSurface, mEGLContext)) {
+        if (!makeCurrent()) {
             return false
         }
         return true
     }
 
     fun makeCurrent(draw: EGLSurface?, read: EGLSurface?, context: EGLContext?): Boolean {
-        return EGL14.eglMakeCurrent(mEGLDisplay, draw, read, context)
+        return  EGL14.eglMakeCurrent(mEGLDisplay, draw, read, context)
     }
 
     fun makeCurrent(surface: EGLSurface?, context: EGLContext?): Boolean {
@@ -116,10 +118,25 @@ class EGLHelper {
         if (eglSurface === EGL14.EGL_NO_SURFACE) {
             return null
         }
-        if (!EGL14.eglMakeCurrent(mEGLDisplay, eglSurface, eglSurface, eglContext)) {
+        if (!makeCurrent(eglSurface)) {
             return null
         }
         return eglSurface
+    }
+
+    fun createGLESWithPBuffer(attrs: EGLConfigAttrs, ctxAttrs: EGLContextAttrs, eglSurface: EGLSurface) : Boolean {
+        mEGLConfig = getConfig(attrs.surfaceType(EGL14.EGL_PBUFFER_BIT))
+        if (mEGLConfig == null) {
+            return false
+        }
+        val eglContext = createContext(mEGLConfig, EGL14.EGL_NO_CONTEXT, ctxAttrs)
+        if (eglContext === EGL14.EGL_NO_CONTEXT) {
+            return false
+        }
+        if (!makeCurrent(eglSurface)) {
+            return false
+        }
+        return true
     }
 
     fun swapBuffers(surface: EGLSurface?) {
@@ -143,6 +160,17 @@ class EGLHelper {
 
     fun destroySurface(surface: EGLSurface?) {
         EGL14.eglDestroySurface(mEGLDisplay, surface)
+    }
+
+    fun destroy() {
+        EGL14.eglMakeCurrent(
+                mEGLDisplay,
+                EGL14.EGL_NO_SURFACE,
+                EGL14.EGL_NO_SURFACE,
+                EGL14.EGL_NO_CONTEXT)
+        EGL14.eglDestroySurface(mEGLDisplay, mEGLSurface)
+        EGL14.eglDestroyContext(mEGLDisplay, mEGLContext)
+        EGL14.eglTerminate(mEGLDisplay)
     }
 
 }

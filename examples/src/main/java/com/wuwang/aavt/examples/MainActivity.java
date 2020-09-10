@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mCameraRecord2:
                 startActivity(new Intent(this,CameraRecorderOldActivity.class));
                 break;
+            case R.id.mCameraRecord3:
+                startActivity(new Intent(this,CameraRecorder2Activity.class));
+                break;
             default:break;
         }
     }

@@ -3,6 +3,7 @@ package com.wyz.common.core.processor
 import android.graphics.SurfaceTexture
 import android.opengl.EGL14
 import android.opengl.GLES20
+import android.util.Log
 import com.wyz.common.api.IObserver
 import com.wyz.common.api.ITextureProvider
 import com.wyz.common.api.Renderer
@@ -95,6 +96,7 @@ class SurfaceProcessor {
         }
         val mSourceWidth = size.x
         val mSourceHeight = size.y
+        Log.e("takePictures", " glRun > ${mSourceWidth} ${mSourceHeight}")
         synchronized(LOCK) { LOCK.notifyAll() }
         //要求数据源提供者必须同步返回数据大小
         if (mSourceWidth <= 0 || mSourceHeight <= 0) {

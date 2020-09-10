@@ -1,6 +1,7 @@
 package com.wuwang.aavt.examples;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,10 +21,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wyz.common.CameraRecorder;
 import com.wyz.common.core.gl.GroupShader;
 import com.wyz.common.core.gl.mark.WaterMarkShader;
+import com.wyz.common.utils.DensityUtils;
 import com.wyz.common.view.CircularProgressView;
 
+import org.jetbrains.annotations.NotNull;
 
-public class CameraRecorderActivity extends AppCompatActivity {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+
+public class CameraRecorder2Activity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
     private TextView mTvPreview;
@@ -61,7 +70,8 @@ public class CameraRecorderActivity extends AppCompatActivity {
                 mCamera.setOutputPath(tempPath);
                 mCamera.open();
                 mCamera.setSurface(holder.getSurface());
-                mCamera.setPreviewSize(width, height);
+                int[] screenWidth = DensityUtils.Companion.getScreenWidth(getApplicationContext());
+                mCamera.setPreviewSize(screenWidth[0], screenWidth[1]);
                 mCamera.startPreview();
                 isPreviewOpen = true;
             }
@@ -86,96 +96,11 @@ public class CameraRecorderActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.mTvRec:
-                isRecordOpen = !isRecordOpen;
-                RecordProgress recordProgress = new RecordProgress(view, new ProgressListener() {
-                    @Override
-                    public void start() {
-                        mTvRecord.setProcess(0);
-                        mCamera.startRecord();
-                    }
-
-                    @Override
-                    public void run(int progressSize) {
-                        mTvRecord.setProcess(progressSize);
-                    }
-
-                    @Override
-                    public void end() {
-                        mCamera.stopRecord();
-                        mTvRecord.setProcess(0);
-
-                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent v = new Intent(Intent.ACTION_VIEW);
-                                v.setDataAndType(Uri.parse(tempPath), "video/mp4");
-                                if (v.resolveActivity(getPackageManager()) != null) {
-                                    startActivity(v);
-                                } else {
-                                    Toast.makeText(CameraRecorderActivity.this,
-                                            "无法找到默认媒体软件打开:" + tempPath, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }, 1000);
-                    }
-                });
-                if (isRecordOpen) {
-                    view.post(recordProgress);
-                } else {
-                    recordProgress.close();
-                }
+                mCamera.takePictures();
                 break;
             default:
                 break;
         }
     }
 
-    class RecordProgress implements Runnable {
-        private View view;
-        private ProgressListener listener;
-        private long startTime = -1;
-        private boolean isRunning  ;
-
-        RecordProgress(View view, ProgressListener listener) {
-            this.view = view;
-            this.listener = listener;
-            this.isRunning = true ;
-        }
-
-        @Override
-        public void run() {
-            if(isRunning){
-                if (mTvRecord.getProcess() >= 20000) {
-                    view.removeCallbacks(this);
-                    listener.end();
-                    listener = null;
-                    return;
-                }
-                long l = System.currentTimeMillis();
-                if (startTime == -1) {
-                    startTime = l;
-                    listener.start();
-                }
-                listener.run((int) (l - startTime));
-                view.postDelayed(this, 50);
-            }else{
-                startTime = -1 ;
-                listener.end();
-                view.removeCallbacks(this);
-                listener = null;
-            }
-        }
-
-        void close(){
-            isRunning= false ;
-        }
-    }
-
-    interface ProgressListener {
-        void start();
-
-        void run(int progressSize) ;
-
-        void end();
-    }
 }

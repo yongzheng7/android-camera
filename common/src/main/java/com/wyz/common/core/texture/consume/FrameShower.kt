@@ -2,6 +2,7 @@ package com.wyz.common.core.texture.consume
 
 import android.opengl.EGLSurface
 import android.opengl.GLES20
+import android.util.Log
 import com.wyz.common.api.FrameDrawedListener
 import com.wyz.common.api.IObserver
 import com.wyz.common.core.base.FrameBean
@@ -27,6 +28,9 @@ open class FrameShower : IObserver<FrameBean> {
         mWidth = width
         mHeight = height
     }
+
+    fun getWidth() : Int = this.mWidth
+    fun getHeight() : Int = this.mHeight
 
     open fun setSurface(surface: Any?) {
         mSurface = surface
@@ -65,6 +69,10 @@ open class FrameShower : IObserver<FrameBean> {
             mListener?.onDrawEnd(mShowSurface, rb)
             rb.egl?.swapBuffers(mShowSurface)
         }
+    }
+
+
+    fun takePicture(path : String){
     }
 
     /**

@@ -187,6 +187,7 @@ abstract class BaseShader : Renderer {
         onDraw()
     }
 
+
     /**
      * 绘制内容到纹理上
      * @param texture 输入纹理ID 将该纹理绘制到自定义帧缓存上
