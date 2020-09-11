@@ -12,7 +12,7 @@ import com.wyz.common.api.ITextureProvider
 import java.io.IOException
 import java.util.concurrent.Semaphore
 
-class CameraProvider : ITextureProvider {
+class CameraProvider : ITextureProvider<SurfaceTexture> {
 
     private var mCamera: Camera? = null
     private val cameraId = Camera.CameraInfo.CAMERA_FACING_BACK

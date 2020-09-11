@@ -3,11 +3,11 @@ package com.wyz.common.api
 import android.graphics.Point
 import android.graphics.SurfaceTexture
 
-interface ITextureProvider {
+interface ITextureProvider<T> {
     /**
      * 打开视频流数据源
      */
-    fun open(surface: SurfaceTexture): Point
+    fun open(t: T): Point
 
     /**
      * 关闭视频流数据源

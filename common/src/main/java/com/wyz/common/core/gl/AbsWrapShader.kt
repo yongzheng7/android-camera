@@ -3,7 +3,7 @@ package com.wyz.common.core.gl
 import com.wyz.common.api.Renderer
 import com.wyz.common.core.gl.oes.OesShader
 
-class WrapShader : Renderer {
+abstract class AbsWrapShader : Renderer {
 
     companion object {
         val TYPE_MOVE = 0
@@ -11,23 +11,25 @@ class WrapShader : Renderer {
     }
 
     private var mRenderer: Renderer?
-    private var mFilter: OesShader
+    private var mDefault: BaseShader
 
     constructor(renderer: Renderer?) {
         mRenderer = renderer
-        mFilter = OesShader()
+        mDefault = getDefault()
         setFlag(TYPE_MOVE)
     }
 
+    abstract fun getDefault(): BaseShader
+
     fun setFlag(flag: Int) {
         if (flag == TYPE_MOVE) {
-            mFilter.setVertexCo(floatArrayOf(
+            mDefault.setVertexCo(floatArrayOf(
                     -1.0f, 1.0f,
                     -1.0f, -1.0f,
                     1.0f, 1.0f,
                     1.0f, -1.0f))
         } else if (flag == TYPE_CAMERA) {
-            mFilter.setVertexCo(floatArrayOf(
+            mDefault.setVertexCo(floatArrayOf(
                     -1.0f, -1.0f,
                     1.0f, -1.0f,
                     -1.0f, 1.0f,
@@ -36,29 +38,29 @@ class WrapShader : Renderer {
     }
 
     fun getTextureMatrix(): FloatArray {
-        return mFilter.getTextureMatrix()
+        return mDefault.getTextureMatrix()
     }
 
     override fun create() {
-        mFilter.create()
+        mDefault.create()
         mRenderer?.create()
     }
 
     override fun sizeChanged(width: Int, height: Int) {
-        mFilter.sizeChanged(width, height)
+        mDefault.sizeChanged(width, height)
         mRenderer?.sizeChanged(width, height)
     }
 
     override fun draw(texture: Int) {
         mRenderer?.also {
-            it.draw(mFilter.drawToTexture(texture))
+            it.draw(mDefault.drawToTexture(texture))
         } ?: also {
-            mFilter.draw(texture)
+            mDefault.draw(texture)
         }
     }
 
     override fun destroy() {
         mRenderer?.destroy()
-        mFilter.destroy()
+        mDefault.destroy()
     }
 }

@@ -18,7 +18,19 @@ enum class TextureUtils {
             GLES20.glTexParameterf(target, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR.toFloat())
             GLES20.glTexParameteri(target, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE)
             GLES20.glTexParameteri(target, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE)
+            GLES20.glBindTexture(target, 0)
             return texture[0]
+        }
+
+        open fun createTextureID(target: Int , textureId : Int , bitmap : Bitmap) {
+            val oldTexture = IntArray(1) ;
+            try{
+                GLES20.glGetIntegerv(target, oldTexture, 0)
+                GLES20.glBindTexture(target, textureId)
+                GLUtils.texImage2D(target, 0, bitmap, 0)
+            }finally {
+                GLES20.glBindTexture(target, oldTexture[0])
+            }
         }
 
         open fun createTextureID(bitmap : Bitmap): Int {

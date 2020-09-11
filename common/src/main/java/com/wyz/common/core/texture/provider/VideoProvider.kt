@@ -16,7 +16,7 @@ import java.io.IOException
 import java.nio.ByteBuffer
 import java.util.concurrent.Semaphore
 
-class VideoProvider : ITextureProvider {
+class VideoProvider : ITextureProvider<SurfaceTexture> {
 
     private val TIME_OUT = 1000L
 
@@ -216,7 +216,7 @@ class VideoProvider : ITextureProvider {
             mDecodeSem = Semaphore(1)
             videoProvideEndFlag = false
             isUserWantToStop = false
-            mAudioEncodeTrack = mStore!!.addTrack(mExtractor!!.getTrackFormat(mAudioDecodeTrack))
+            mAudioEncodeTrack = mStore.addTrack(mExtractor!!.getTrackFormat(mAudioDecodeTrack))
             val format = mExtractor!!.getTrackFormat(mVideoDecodeTrack)
             mVideoDecoder = MediaCodec.createDecoderByType(format.getString(MediaFormat.KEY_MIME)!!)
             mVideoDecoder!!.configure(format, Surface(surface), null, 0)

@@ -14,10 +14,10 @@ import com.wyz.common.core.egl.EGLContextAttrs
 import com.wyz.common.core.egl.EGLHelper
 import com.wyz.common.core.base.FrameBuffer
 import com.wyz.common.core.gl.AbsWrapShader
-import com.wyz.common.core.gl.OesWrapShader
-import com.wyz.common.utils.TextureUtils.Companion.createTextureID
+import com.wyz.common.core.gl.LazyWrapShader
+import java.lang.RuntimeException
 
-class SurfaceProcessor {
+class PictureProcessor {
 
     private var mGLThreadFlag = false
 
@@ -27,7 +27,7 @@ class SurfaceProcessor {
 
     private val observable: Observable<FrameBean>
 
-    private var mProvider: ITextureProvider<SurfaceTexture>? = null
+    private var mProvider: ITextureProvider<IntArray>? = null
 
 
     private val LOCK = Object()
@@ -36,12 +36,12 @@ class SurfaceProcessor {
         observable = Observable()
     }
 
-    fun setTextureProvider(provider: ITextureProvider<SurfaceTexture>) {
+    fun setTextureProvider(provider: ITextureProvider<IntArray>) {
         mProvider = provider
     }
 
     fun setRenderer(renderer: Renderer) {
-        mRenderer = OesWrapShader(renderer)
+        mRenderer = LazyWrapShader(renderer)
     }
 
     fun start() {
@@ -51,7 +51,7 @@ class SurfaceProcessor {
                     return
                 }
                 mGLThreadFlag = true
-                mGLThread = Thread(Runnable { glRun() })
+                mGLThread = Thread(Runnable{glRun()})
                 mGLThread?.start()
                 try {
                     LOCK.wait()
@@ -87,17 +87,22 @@ class SurfaceProcessor {
             synchronized(LOCK) { LOCK.notifyAll() }
             return
         }
-        val mInputSurfaceTextureId = createTextureID(true) // 创建一个屏幕纹理id
-        val mInputSurfaceTexture = SurfaceTexture(mInputSurfaceTextureId)
-        val size = iTextureProvider.open(mInputSurfaceTexture) ?: return
-        if (size.x <= 0 || size.y <= 0) {
+        val intArray = IntArray(1) // 创建一个屏幕纹理id
+        intArray[0]= -1
+        val size = iTextureProvider.open(intArray)
+        if (size.x <= 0 || size.y <= 0 ) {
             destroyGL(egl)
             synchronized(LOCK) { LOCK.notifyAll() }
             return
         }
+        if(intArray[0] == -1){
+            destroyGL(egl)
+            synchronized(LOCK) { LOCK.notifyAll() }
+            throw RuntimeException(" texture id = -1")
+        }
         val mSourceWidth = size.x
         val mSourceHeight = size.y
-        Log.e("takePictures", " glRun > ${mSourceWidth} ${mSourceHeight}")
+        Log.e("takePictures", " glRun > ${mSourceWidth} ${mSourceHeight}  ${intArray[0] }")
         synchronized(LOCK) { LOCK.notifyAll() }
         //要求数据源提供者必须同步返回数据大小
         if (mSourceWidth <= 0 || mSourceHeight <= 0) {
@@ -105,7 +110,7 @@ class SurfaceProcessor {
             return
         }
         if (mRenderer == null) {
-            mRenderer = OesWrapShader(null)
+            mRenderer = LazyWrapShader(null)
         }
         mRenderer?.create()
         mRenderer?.sizeChanged(mSourceWidth, mSourceHeight)
@@ -121,17 +126,14 @@ class SurfaceProcessor {
         val sourceFrame = FrameBuffer()
         //要求数据源必须同步填充SurfaceTexture，填充完成前等待
         while (!iTextureProvider.frame() && mGLThreadFlag) {
-            mInputSurfaceTexture.updateTexImage()
-            mInputSurfaceTexture.getTransformMatrix(mRenderer?.getTextureMatrix())
             sourceFrame.bindFrameBuffer(mSourceWidth, mSourceHeight)
             GLES20.glViewport(0, 0, mSourceWidth, mSourceHeight)
-            mRenderer?.draw(mInputSurfaceTextureId)
+            mRenderer?.draw(intArray[0])
             sourceFrame.unBindFrameBuffer()
-
             //接收数据源传入的时间戳
             rb.textureId = sourceFrame.cacheTextureId
             rb.timeStamp = iTextureProvider.getTimeStamp()
-            rb.textureTime = mInputSurfaceTexture.timestamp
+            rb.textureTime = System.currentTimeMillis()
             observable.notify(rb)
         }
         synchronized(LOCK) {

@@ -15,7 +15,8 @@ import com.wyz.common.api.Renderer;
 import com.wyz.common.core.egl.EGLConfigAttrs;
 import com.wyz.common.core.egl.EGLContextAttrs;
 import com.wyz.common.core.egl.EGLHelper;
-import com.wyz.common.core.gl.WrapShader;
+import com.wyz.common.core.gl.AbsWrapShader;
+import com.wyz.common.core.gl.OesWrapShader;
 import com.wyz.common.utils.TextureUtils;
 
 import java.io.IOException;
@@ -73,7 +74,7 @@ class Mp4Processor {
     private boolean isVideoExtractorEnd=false;
     private boolean isAudioExtractorEnd=false;
     private boolean isStarted=false;
-    private WrapShader mRenderer;
+    private AbsWrapShader mRenderer;
     private boolean mGLThreadFlag=false;
     private Semaphore mSem;
     private Semaphore mDecodeSem;
@@ -128,7 +129,7 @@ class Mp4Processor {
      * @param renderer 处理接口
      */
     public void setRenderer(Renderer renderer){
-        mRenderer=new WrapShader(renderer);
+        mRenderer=new OesWrapShader(renderer);
     }
 
     public int getVideoSurfaceTextureId(){
@@ -414,7 +415,7 @@ class Mp4Processor {
             return;
         }
         if(mRenderer==null){
-            mRenderer=new WrapShader(null);
+            mRenderer=new OesWrapShader(null);
         }
         mRenderer.create();
         mRenderer.sizeChanged(mOutputVideoWidth,mOutputVideoHeight);

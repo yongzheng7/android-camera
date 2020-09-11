@@ -31,6 +31,12 @@
         android:id="@+id/mCameraRecord3"
         android:onClick="onClick"
         android:text="@string/camerarecord3" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mPictureScreen"
+        android:onClick="onClick"
+        android:text="图片预览" />
 
 
     <Button

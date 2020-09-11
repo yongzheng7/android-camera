@@ -21,9 +21,9 @@ import com.wyz.common.api.Renderer;
 import com.wyz.common.core.egl.EGLConfigAttrs;
 import com.wyz.common.core.egl.EGLContextAttrs;
 import com.wyz.common.core.egl.EGLHelper;
-import com.wyz.common.core.gl.BaseShader;
+import com.wyz.common.core.gl.AbsWrapShader;
 import com.wyz.common.core.gl.LazyShader;
-import com.wyz.common.core.gl.WrapShader;
+import com.wyz.common.core.gl.OesWrapShader;
 import com.wyz.common.utils.MatrixUtils;
 import com.wyz.common.utils.TextureUtils;
 
@@ -60,7 +60,7 @@ class CameraRecorder {
     private int mVideoTrack=-1;
 
     private boolean mGLThreadFlag=false;
-    private WrapShader mRenderer;
+    private AbsWrapShader mRenderer;
     private Semaphore mSem;
     private Semaphore mEncodeSem;
     private boolean isMuxStarted=false;
@@ -135,7 +135,7 @@ class CameraRecorder {
     }
 
     public void setRenderer(Renderer renderer){
-        mRenderer=new WrapShader(renderer);
+        mRenderer=new OesWrapShader(renderer);
     }
 
     public void startPreview(){
@@ -248,9 +248,9 @@ class CameraRecorder {
                 return;
             }
             if(mRenderer==null){
-                mRenderer=new WrapShader(null);
+                mRenderer=new OesWrapShader(null);
             }
-            mRenderer.setFlag(WrapShader.Companion.getTYPE_CAMERA());
+            mRenderer.setFlag(AbsWrapShader.Companion.getTYPE_CAMERA());
             mRenderer.create();
             int[] t=new int[1];
             GLES20.glGetIntegerv(GLES20.GL_FRAMEBUFFER_BINDING,t,0);
