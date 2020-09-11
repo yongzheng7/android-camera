@@ -11,6 +11,12 @@
         android:id="@+id/mMp4Process"
         android:onClick="onClick"
         android:text="@string/mp4process" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mMp4Process2"
+        android:onClick="onClick"
+        android:text="Mp4处理2" />
 
     <Button
         android:layout_width="match_parent"
@@ -24,7 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/mCameraRecord2"
         android:onClick="onClick"
-        android:text="@string/camerarecord2" />
+        android:text="视频录制_旧版用于学习" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

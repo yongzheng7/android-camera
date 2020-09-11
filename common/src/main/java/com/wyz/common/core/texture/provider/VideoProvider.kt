@@ -58,6 +58,10 @@ class VideoProvider : ITextureProvider<SurfaceTexture> {
         mPath = path
     }
 
+    fun getMediaDuration(): Long {
+        return mVideoTotalTime
+    }
+
     private fun extractMedia(): Boolean {
         if (mPath == null || !File(mPath!!).exists()) {
             //文件不存在
@@ -136,10 +140,6 @@ class VideoProvider : ITextureProvider<SurfaceTexture> {
             }
         }
         return isVideoExtractorEnd || isUserWantToStop
-    }
-
-    fun getMediaDuration(): Long {
-        return mVideoTotalTime
     }
 
     private fun startDecodeThread() {

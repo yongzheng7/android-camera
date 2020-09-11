@@ -47,7 +47,7 @@ public class ScreenShowerActivity extends AppCompatActivity {
                 filter.addFilter(new LazyShader());
                 filter.addFilter(new StickFigureShader(getResources()));
                 filter.addFilter(new BeautyShader(getResources()).setBeautyLevel(4));
-                filter.addFilter(new WaterMarkShader().setMarkPosition(30, 10, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
+                filter.addFilter(new WaterMarkShader().setMarkPosition(150, 150, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
             }
 
             @Override

@@ -19,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wyz.common.CameraRecorder;
 import com.wyz.common.core.gl.GroupShader;
+import com.wyz.common.core.gl.LazyShader;
+import com.wyz.common.core.gl.beauty.BeautyShader;
+import com.wyz.common.core.gl.func.StickFigureShader;
 import com.wyz.common.core.gl.mark.WaterMarkShader;
 import com.wyz.common.view.CircularProgressView;
 
@@ -30,7 +33,6 @@ public class CameraRecorderActivity extends AppCompatActivity {
     private CircularProgressView mTvRecord;
     private boolean isPreviewOpen = false;
     private boolean isRecordOpen = false;
-    private int mCameraWidth, mCameraHeight;
 
     private CameraRecorder mCamera;
 
@@ -38,9 +40,9 @@ public class CameraRecorderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.e("CameraActivity", "onCreate ->");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_record);
+
         mSurfaceView = findViewById(R.id.mSurfaceView);
         mTvRecord = findViewById(R.id.mTvRec);
         mTvPreview = findViewById(R.id.mTvShow);
@@ -51,9 +53,10 @@ public class CameraRecorderActivity extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder holder) {
                 GroupShader filter = new GroupShader(getResources());
                 mCamera.setRenderer(filter);
-                //filter.addFilter(new StickFigureFilter(getResources()));
-                //filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
-                filter.addFilter(new WaterMarkShader().setMarkPosition(30, 10, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
+               // filter.addFilter(new LazyShader());
+               // filter.addFilter(new StickFigureShader(getResources()));
+               // filter.addFilter(new BeautyShader(getResources()).setBeautyLevel(4));
+                filter.addFilter(new WaterMarkShader().setMarkPosition(100, 100, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
             }
 
             @Override

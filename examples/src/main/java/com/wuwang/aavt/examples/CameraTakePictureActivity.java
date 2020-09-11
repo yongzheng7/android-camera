@@ -1,19 +1,13 @@
 package com.wuwang.aavt.examples;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,15 +18,9 @@ import com.wyz.common.core.gl.mark.WaterMarkShader;
 import com.wyz.common.utils.DensityUtils;
 import com.wyz.common.view.CircularProgressView;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
-public class CameraRecorder2Activity extends AppCompatActivity {
+public class CameraTakePictureActivity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
     private TextView mTvPreview;
@@ -62,7 +50,7 @@ public class CameraRecorder2Activity extends AppCompatActivity {
                 mCamera.setRenderer(filter);
                 //filter.addFilter(new StickFigureFilter(getResources()));
                 //filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
-                filter.addFilter(new WaterMarkShader().setMarkPosition(30, 10, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
+                filter.addFilter(new WaterMarkShader().setMarkPosition(150, 150, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
             }
 
             @Override

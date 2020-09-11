@@ -29,13 +29,16 @@
         <activity android:name=".ExampleMp4ProcessActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".ExampleMp4Process2Activity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".CameraRecorderActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".CameraRecorderOldActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".CameraRecorder2Activity"
+        <activity android:name=".CameraTakePictureActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ScreenShowerActivity"

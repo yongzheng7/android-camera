@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mMp4Process:
                 startActivity(new Intent(this,ExampleMp4ProcessActivity.class));
                 break;
+            case R.id.mMp4Process2:
+                startActivity(new Intent(this,ExampleMp4Process2Activity.class));
+                break;
             case R.id.mCameraRecord:
                 startActivity(new Intent(this,CameraRecorderActivity.class));
                 break;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this,CameraRecorderOldActivity.class));
                 break;
             case R.id.mCameraRecord3:
-                startActivity(new Intent(this,CameraRecorder2Activity.class));
+                startActivity(new Intent(this, CameraTakePictureActivity.class));
                 break;
             case R.id.mPictureScreen:
                 startActivity(new Intent(this,ScreenShowerActivity.class));

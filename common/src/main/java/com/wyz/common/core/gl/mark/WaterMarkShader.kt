@@ -2,7 +2,6 @@ package com.wyz.common.core.gl.mark
 
 import android.graphics.Bitmap
 import android.opengl.GLES20
-import android.opengl.GLUtils
 import com.wyz.common.core.gl.LazyShader
 import com.wyz.common.utils.TextureUtils.Companion.createTextureID
 
@@ -28,12 +27,12 @@ class WaterMarkShader : LazyShader() {
         runOnGLThread(Runnable {
             if (bmp != null) {
                 if (markTextureId == -1) {
-                    markTextureId = createTextureID(false)
+                    markTextureId = createTextureID(bmp)
+//                    GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0)
+                    bmp.recycle()
                 } else {
                     GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, markTextureId)
                 }
-                GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0)
-                bmp.recycle()
             } else {
                 if (markTextureId != -1) {
                     GLES20.glDeleteTextures(1, intArrayOf(markTextureId), 0)
