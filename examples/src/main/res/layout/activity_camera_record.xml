@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:id="@+id/mSurfaceView" />
 
-    <com.wyz.common.view.CircularProgressView
+    <com.wyz.camera.view.CircularProgressView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:onClick="onClick"

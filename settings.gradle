@@ -1,2 +1,4 @@
+include ':edit'
 include ':common'
+include ':camera'
 include ':examples'

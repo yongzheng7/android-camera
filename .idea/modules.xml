@@ -6,7 +6,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AAVT-master.iml" filepath="$PROJECT_DIR$/.idea/modules/AAVT-master.iml" group="AAVT-master" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/examples/AAVT-master-examples.iml" filepath="$PROJECT_DIR$/.idea/modules/examples/AAVT-master-examples.iml" group="AAVT-master/examples" />
       <module fileurl="file://$PROJECT_DIR$/aavt/aavt.iml" filepath="$PROJECT_DIR$/aavt/aavt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/camera.iml" filepath="$PROJECT_DIR$/.idea/modules/common/camera.iml" group="AAVT-master/camera" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/common.iml" group="AAVT-master/common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/edit/edit.iml" filepath="$PROJECT_DIR$/.idea/modules/edit/edit.iml" group="AAVT-master/edit" />
       <module fileurl="file://$PROJECT_DIR$/examples/examples.iml" filepath="$PROJECT_DIR$/examples/examples.iml" />
     </modules>
   </component>

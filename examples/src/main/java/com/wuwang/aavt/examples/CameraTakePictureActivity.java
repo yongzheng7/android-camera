@@ -12,12 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.common.CameraRecorder;
-import com.wyz.common.core.gl.GroupShader;
-import com.wyz.common.core.gl.mark.WaterMarkShader;
-import com.wyz.common.utils.DensityUtils;
-import com.wyz.common.view.CircularProgressView;
-
+import com.wyz.camera.CameraRecorder;
+import com.wyz.camera.core.gl.GroupShader;
+import com.wyz.camera.core.gl.func.unit.CameoShader;
+import com.wyz.camera.core.gl.func.unit.ColorShader;
+import com.wyz.camera.core.gl.func.unit.ConvolutionShader;
+import com.wyz.camera.core.gl.func.unit.InvertShader;
+import com.wyz.camera.core.gl.func.unit.SepiaShader;
+import com.wyz.camera.core.gl.func.unit.SketchShader;
+import com.wyz.camera.core.gl.func.unit.ToonShader;
+import com.wyz.camera.core.gl.mark.WaterMarkShader;
+import com.wyz.camera.utils.DensityUtils;
+import com.wyz.camera.view.CircularProgressView;
 
 
 public class CameraTakePictureActivity extends AppCompatActivity {
@@ -48,6 +54,13 @@ public class CameraTakePictureActivity extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder holder) {
                 GroupShader filter = new GroupShader(getResources());
                 mCamera.setRenderer(filter);
+                //filter.addFilter(new ColorShader(getResources() , new float[]{.0f , .5f , .0f}));
+                // filter.addFilter(new CameoShader(getResources() , new float[]{1920f, 1080f}));
+                // filter.addFilter(new InvertShader(getResources() ));
+//                filter.addFilter(new SepiaShader(getResources() ));
+                //               filter.addFilter(new ToonShader(getResources()));
+//                filter.addFilter(new ConvolutionShader(getResources()));
+               filter.addFilter(new SketchShader(getResources()));
                 //filter.addFilter(new StickFigureFilter(getResources()));
                 //filter.addFilter(new BeautyFilter(getResources()).setBeautyLevel(4));
                 filter.addFilter(new WaterMarkShader().setMarkPosition(150, 150, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));

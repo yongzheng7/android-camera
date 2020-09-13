@@ -1,6 +1,5 @@
 package com.wuwang.aavt.examples;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -9,19 +8,16 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.common.ScreenShower;
-import com.wyz.common.core.gl.GroupShader;
-import com.wyz.common.core.gl.LazyShader;
-import com.wyz.common.core.gl.beauty.BeautyShader;
-import com.wyz.common.core.gl.func.StickFigureShader;
-import com.wyz.common.core.gl.mark.WaterMarkShader;
-import com.wyz.common.utils.DensityUtils;
-import com.wyz.common.view.CircularProgressView;
+import com.wyz.camera.ScreenShower;
+import com.wyz.camera.core.gl.GroupShader;
+import com.wyz.camera.core.gl.func.StickFigureShader;
+import com.wyz.common.ui.AbsActionBarActivity;
+import com.wyz.camera.utils.DensityUtils;
+import com.wyz.camera.view.CircularProgressView;
 
 
-public class ScreenShowerActivity extends AppCompatActivity {
+public class ScreenShowerActivity extends AbsActionBarActivity {
 
     private SurfaceView mSurfaceView;
     private CircularProgressView mTvRecord;
@@ -44,10 +40,19 @@ public class ScreenShowerActivity extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder holder) {
                 GroupShader filter = new GroupShader(getResources());
                 screenShower.setRenderer(filter);
-                filter.addFilter(new LazyShader());
+                //filter.addFilter(new LazyShader());
                 filter.addFilter(new StickFigureShader(getResources()));
-                filter.addFilter(new BeautyShader(getResources()).setBeautyLevel(4));
-                filter.addFilter(new WaterMarkShader().setMarkPosition(150, 150, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
+                //filter.addFilter(new BlackMagicShader(getResources()));
+                //filter.addFilter(new CandyShader(getResources()));
+                //filter.addFilter(new FluorescenceShader(getResources()));
+                //filter.addFilter(new WaterColorShader(getResources()));
+                //filter.addFilter(new RollShader(getResources()));
+                //filter.addFilter(new Faltung33Shader(getResources() , Faltung33Shader.Companion.getFILTER_BORDER()));
+                //filter.addFilter(new Faltung33Shader(getResources() , Faltung33Shader.Companion.getFILTER_CAMEO()));
+                //filter.addFilter(new Faltung33Shader(getResources() , Faltung33Shader.Companion.getFILTER_SHARPEN()));
+                //filter.addFilter(new StickFigureShader(getResources()));
+                //filter.addFilter(new BeautyShader(getResources()).setBeautyLevel(4));
+                //filter.addFilter(new WaterMarkShader().setMarkPosition(150, 150, 100, 76).setMark(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
             }
 
             @Override

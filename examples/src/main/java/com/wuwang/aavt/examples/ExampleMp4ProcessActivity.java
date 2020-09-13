@@ -17,7 +17,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.common.core.processor.VideoProcessor;
+import com.wyz.camera.core.processor.VideoProcessor;
 
 
 public class ExampleMp4ProcessActivity extends AppCompatActivity {

@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/mCameraRecord3"
         android:onClick="onClick"
-        android:text="@string/camerarecord3" />
+        android:text="拍照管理" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

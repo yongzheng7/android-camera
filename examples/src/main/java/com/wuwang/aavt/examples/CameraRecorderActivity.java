@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -17,13 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.common.CameraRecorder;
-import com.wyz.common.core.gl.GroupShader;
-import com.wyz.common.core.gl.LazyShader;
-import com.wyz.common.core.gl.beauty.BeautyShader;
-import com.wyz.common.core.gl.func.StickFigureShader;
-import com.wyz.common.core.gl.mark.WaterMarkShader;
-import com.wyz.common.view.CircularProgressView;
+import com.wyz.camera.CameraRecorder;
+import com.wyz.camera.core.gl.GroupShader;
+import com.wyz.camera.core.gl.mark.WaterMarkShader;
+import com.wyz.camera.view.CircularProgressView;
 
 
 public class CameraRecorderActivity extends AppCompatActivity {
