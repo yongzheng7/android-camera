@@ -1,8 +1,9 @@
 package com.wuwang.aavt.examples;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,41 +14,35 @@ import androidx.annotation.Nullable;
 
 import com.wyz.camera.ScreenShower;
 import com.wyz.camera.core.gl.GroupShader;
-import com.wyz.camera.core.gl.RollShader;
 import com.wyz.camera.core.gl.func.FluorescenceShader;
-import com.wyz.camera.core.gl.func.StickFigureShader;
-import com.wyz.camera.core.gl.mark.WaterColorStepShader;
-import com.wyz.common.ui.AbsActionBarActivity;
 import com.wyz.camera.view.CircularProgressView;
+import com.wyz.common.ui.AbsActionBarActivity;
 
 
-public class ScreenShowerActivity extends AbsActionBarActivity {
+public class ScreenShower2Activity extends AbsActionBarActivity {
 
     private SurfaceView mSurfaceView;
-    private CircularProgressView mTvRecord;
 
     private ScreenShower screenShower;
 
-    private String tempPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testPicture.jpeg";
+    public static void show(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context , ScreenShower2Activity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Log.e("CameraActivity", "onCreate ->");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera_record);
-
-        mTvRecord = findViewById(R.id.mTvRec);
-        mTvRecord.setTotal(20000);
-        if (ScreenShower.Companion.getShower() == null) {
-            ScreenShower.Companion.setShower(new ScreenShower(tempPath, true));
-        }
+        setContentView(R.layout.activity_camera_record2);
         screenShower = ScreenShower.Companion.getShower();
-        mSurfaceView = findViewById(R.id.mSurfaceView);
+        mSurfaceView = findViewById(R.id.mSurfaceView2);
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 GroupShader filter = new GroupShader(getResources());
-                screenShower.setRenderer(filter);
+                //screenShower.setRenderer(filter);
                 //filter.addFilter(new LazyShader());
                 //filter.addFilter(new StickFigureShader(getResources()));
                 //filter.addFilter(new BlackMagicShader(getResources()));
@@ -67,15 +62,20 @@ public class ScreenShowerActivity extends AbsActionBarActivity {
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                screenShower.open();
+                Log.e("FrameShower" , "surfaceChanged 1 ") ;
+                //screenShower.open();
                 screenShower.setSurface(holder.getSurface());
+                Log.e("FrameShower" , "surfaceChanged 2 ") ;
+
                 screenShower.setPreviewSize(width, height);
+                Log.e("FrameShower" , "surfaceChanged 3 ") ;
                 screenShower.startPreview();
+                Log.e("FrameShower" , "surfaceChanged 4 ") ;
             }
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
+                screenShower.recyclePreview();
             }
         });
     }
@@ -87,16 +87,9 @@ public class ScreenShowerActivity extends AbsActionBarActivity {
                 break;
             case R.id.mTvShow:
                 screenShower.updateFrame();
-
-                screenShower.recyclePreview();
-                Toast.makeText(this, "ScreenShower-1-Activity ", Toast.LENGTH_SHORT).show();
-                new Handler(getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ScreenShower2Activity.show(ScreenShowerActivity.this);
-                    }
-                }, 1000);
+                Toast.makeText(this, "ScreenShower-2-Activity ", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
+
 }

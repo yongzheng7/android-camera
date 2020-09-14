@@ -133,6 +133,11 @@ class ScreenShower {
         mShower.close()
     }
 
+    fun recyclePreview() {
+        mShower.recycle()
+    }
+
+
     fun setSurface(surface: Any) {
         mShower.setSurface(surface)
     }
@@ -146,7 +151,7 @@ class ScreenShower {
     }
 
     fun close() {
-        mShower.close()
+        mShower.recycle()
         mTextureProcessor.stop()
     }
 

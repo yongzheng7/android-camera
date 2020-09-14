@@ -45,6 +45,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/RecxTheme">
         </activity>
+        <activity android:name=".ScreenShower2Activity">
+        </activity>
         <activity android:name=".YuvExportActivity"
             android:screenOrientation="portrait">
         </activity>
