@@ -20,12 +20,15 @@ import java.util.concurrent.Semaphore
 
 class ScreenShower {
 
+    companion object{
+        var shower : ScreenShower ?= null
+    }
+
     private val mTextureProcessor: PictureProcessor
 
     private val mShower: FrameShower
 
     private var mFrameUpdate: Semaphore? = null
-
 
     fun updateFrame(){
         mFrameUpdate?.drainPermits()
@@ -120,6 +123,7 @@ class ScreenShower {
     fun setRenderer(renderer: Renderer) {
         mTextureProcessor.setRenderer(renderer)
     }
+
 
     fun startPreview() {
         mShower.open()

@@ -1,9 +1,10 @@
 package com.wyz.camera.core.gl
 
 import android.content.res.Resources
+import com.wyz.camera.api.Renderer
 
 open class GroupShader : LazyShader {
-    private val mGroup: MutableList<BaseShader>
+    private val mGroup: MutableList<Renderer>
 
     constructor(resource: Resources) : super(resource)
 
@@ -11,11 +12,11 @@ open class GroupShader : LazyShader {
         mGroup = arrayListOf()
     }
 
-    fun addFilter(filter: BaseShader) {
+    fun addFilter(filter: Renderer) {
         mGroup.add(filter)
     }
 
-    fun addFilter(index: Int, filter: BaseShader) {
+    fun addFilter(index: Int, filter: Renderer) {
         mGroup.add(index, filter)
     }
 
@@ -26,7 +27,7 @@ open class GroupShader : LazyShader {
         })
     }
 
-    fun removeFilter(filter: BaseShader) {
+    fun removeFilter(filter: Renderer) {
         runOnGLThread(Runnable {
             if (mGroup.remove(filter)) {
                 filter.destroy()
@@ -34,11 +35,11 @@ open class GroupShader : LazyShader {
         })
     }
 
-    fun get(index: Int): BaseShader {
+    fun get(index: Int): Renderer {
         return mGroup[index]
     }
 
-    fun iterator(): Iterator<BaseShader> {
+    fun iterator(): Iterator<Renderer> {
         return mGroup.iterator()
     }
 

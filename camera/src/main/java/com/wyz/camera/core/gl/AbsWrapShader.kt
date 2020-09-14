@@ -10,6 +10,7 @@ abstract class AbsWrapShader : Renderer {
         val TYPE_1379 = 1
         val TYPE_3917 = 2
         val TYPE_9731 = 3
+
         // 顺时针
         val TYPE_1739 = 4
         val TYPE_3197 = 5
@@ -51,37 +52,37 @@ abstract class AbsWrapShader : Renderer {
                     1.0f, -1.0f,
                     -1.0f, 1.0f,
                     1.0f, 1.0f))
-        }else if (flag == TYPE_3917) {
+        } else if (flag == TYPE_3917) {
             mDefault.setVertexCo(floatArrayOf(
                     1.0f, -1.0f,
                     1.0f, 1.0f,
                     -1.0f, -1.0f,
                     -1.0f, 1.0f))
-        }else if (flag == TYPE_9731) {
+        } else if (flag == TYPE_9731) {
             mDefault.setVertexCo(floatArrayOf(
                     1.0f, 1.0f,
                     -1.0f, 1.0f,
                     1.0f, -1.0f,
                     -1.0f, -1.0f))
-        }else if (flag == TYPE_1739) {
+        } else if (flag == TYPE_1739) {
             mDefault.setVertexCo(floatArrayOf(
                     -1.0f, -1.0f,
                     -1.0f, 1.0f,
                     1.0f, -1.0f,
                     1.0f, 1.0f))
-        }else if (flag == TYPE_3197) {
+        } else if (flag == TYPE_3197) {
             mDefault.setVertexCo(floatArrayOf(
                     1.0f, -1.0f,
                     -1.0f, -1.0f,
                     1.0f, 1.0f,
                     -1.0f, 1.0f))
-        }else if (flag == TYPE_9371) {
+        } else if (flag == TYPE_9371) {
             mDefault.setVertexCo(floatArrayOf(
                     1.0f, 1.0f,
                     1.0f, -1.0f,
                     -1.0f, 1.0f,
                     -1.0f, -1.0f))
-        }else if (flag == TYPE_7913) {
+        } else if (flag == TYPE_7913) {
             mDefault.setVertexCo(floatArrayOf(
                     -1.0f, 1.0f,
                     1.0f, 1.0f,
@@ -109,6 +110,14 @@ abstract class AbsWrapShader : Renderer {
             it.draw(mDefault.drawToTexture(texture))
         } ?: also {
             mDefault.draw(texture)
+        }
+    }
+
+    override fun drawToTexture(texture: Int): Int {
+        return mRenderer?.let {
+            it.drawToTexture(mDefault.drawToTexture(texture))
+        } ?: let {
+            mDefault.drawToTexture(texture)
         }
     }
 

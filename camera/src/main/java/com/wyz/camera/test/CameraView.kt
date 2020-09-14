@@ -224,6 +224,10 @@ class CameraView : TextureView, SurfaceTextureListener, Renderer {
         mFilter!!.draw(texture)
     }
 
+    override fun drawToTexture(texture: Int): Int {
+        return -1
+    }
+
     override fun destroy() {
         mFilter!!.destroy()
     }

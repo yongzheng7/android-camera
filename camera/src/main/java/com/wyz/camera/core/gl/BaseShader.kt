@@ -194,7 +194,7 @@ abstract class BaseShader : Renderer {
      * @param texture 输入纹理ID 将该纹理绘制到自定义帧缓存上
      * @return 输出纹理ID 获取帧缓存上绑定的颜色附件id = 纹理id
      */
-    open fun drawToTexture(texture: Int): Int {
+    override fun drawToTexture(texture: Int): Int {
         mFrameTemp.bindFrameBuffer(mWidth, mHeight)
         draw(texture)
         mFrameTemp.unBindFrameBuffer()

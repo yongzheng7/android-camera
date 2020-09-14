@@ -16,7 +16,9 @@ class EGLHelper {
         initDisplay(display)
     }
 
-
+    /**
+     * 初始化显示器 display
+     */
     fun initDisplay(key: Int) {
         mEGLDisplay = EGL14.eglGetDisplay(key)
         //获取版本号，[0]为版本号，[1]为子版本号
@@ -24,6 +26,9 @@ class EGLHelper {
         EGL14.eglInitialize(mEGLDisplay, versions, 0, versions, 1)
     }
 
+    /**
+     * 获取EGL的config
+     */
     fun getConfig(attrs: EGLConfigAttrs): EGLConfig? {
         val configs = arrayOfNulls<EGLConfig>(1)
         val configNum = IntArray(1)
@@ -49,10 +54,16 @@ class EGLHelper {
         return mEGLDisplay
     }
 
+    /**
+     * 创建EGL context
+     */
     fun createContext(config: EGLConfig?, share: EGLContext?, attrs: EGLContextAttrs): EGLContext {
         return EGL14.eglCreateContext(mEGLDisplay, config, share, attrs.build(), 0)
     }
 
+    /**
+     * 创建一个window surface
+     */
     fun createWindowSurface(surface: Any): EGLSurface {
         return createWindowSurface(mEGLConfig , surface)
     }
@@ -61,10 +72,16 @@ class EGLHelper {
         return EGL14.eglCreateWindowSurface(mEGLDisplay, config, surface, intArrayOf(EGL14.EGL_NONE), 0)
     }
 
+    /**
+     * 创建一个 后台 surface
+     */
     fun createPBufferSurface(config: EGLConfig?, width: Int, height: Int): EGLSurface {
         return EGL14.eglCreatePbufferSurface(mEGLDisplay, config, intArrayOf(EGL14.EGL_WIDTH, width, EGL14.EGL_HEIGHT, height, EGL14.EGL_NONE), 0)
     }
 
+    /**
+     * 创建 EGL config context surface
+     */
     fun createGLESWithSurface(attrs: EGLConfigAttrs, ctxAttrs: EGLContextAttrs, surface: Any): Boolean {
         mEGLConfig = getConfig(attrs.surfaceType(EGL14.EGL_WINDOW_BIT))
         if (mEGLConfig == null) {
@@ -104,6 +121,10 @@ class EGLHelper {
         EGLExt.eglPresentationTimeANDROID(mEGLDisplay, surface, time)
     }
 
+    /**
+     * 创建一个后台EGL surface
+     * 和 window surface 的不同的是, 该surface 可以配置其宽高
+     */
     fun createGLESWithPBuffer(attrs: EGLConfigAttrs, ctxAttrs: EGLContextAttrs, width: Int, height: Int): EGLSurface? {
         mEGLConfig = getConfig(attrs.surfaceType(EGL14.EGL_PBUFFER_BIT))
         if (mEGLConfig == null) {

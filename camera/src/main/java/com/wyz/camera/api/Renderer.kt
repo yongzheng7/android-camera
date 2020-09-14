@@ -19,8 +19,16 @@ interface Renderer {
     fun draw(texture: Int)
 
     /**
+     * 渲染并输出
+     * @param texture 输入纹理
+     */
+    fun drawToTexture(texture: Int): Int
+
+    /**
      * 销毁
      */
     fun destroy()
+
+
 
 }
