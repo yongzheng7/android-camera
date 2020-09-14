@@ -15,6 +15,7 @@ import com.wyz.camera.core.texture.consume.FrameShower
 import com.wyz.camera.utils.TextureUtils
 import java.io.*
 import java.nio.IntBuffer
+import java.util.concurrent.Semaphore
 
 
 class ScreenShower {
@@ -23,8 +24,16 @@ class ScreenShower {
 
     private val mShower: FrameShower
 
-    constructor(path : String) {
+    private var mFrameUpdate: Semaphore? = null
 
+
+    fun updateFrame(){
+        mFrameUpdate?.drainPermits()
+        mFrameUpdate?.release()
+    }
+
+    constructor(path: String , isAutoUpdate: Boolean) {
+        mFrameUpdate = Semaphore(1)
         //用于预览图像
         mShower = FrameShower() // 展示消费
         mShower.setOutputSize(720, 1280) // 设置输出大小 可以后期调整为自定义获取机器的大小
@@ -86,6 +95,13 @@ class ScreenShower {
             }
 
             override fun frame(): Boolean {
+                if(!isAutoUpdate){
+                    try {
+                        mFrameUpdate?.acquire()
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
                 return false
             }
 
