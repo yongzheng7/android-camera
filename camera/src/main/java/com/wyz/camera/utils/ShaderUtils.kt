@@ -2,11 +2,12 @@ package com.wyz.camera.utils
 
 import android.content.res.Resources
 import android.opengl.GLES20
+import android.util.Log
 
 enum class ShaderUtils {
     ;
 
-    companion object{
+    companion object {
         fun readText(mRes: Resources, path: String): String? {
             val result = StringBuilder()
             try {
@@ -30,13 +31,15 @@ enum class ShaderUtils {
          */
         open fun loadShader(shaderType: Int, source: String?): Int {
             var shader = GLES20.glCreateShader(shaderType)
+            val compiled = IntArray(1)
             if (0 != shader) {
                 GLES20.glShaderSource(shader, source)
                 GLES20.glCompileShader(shader)
-                val compiled = IntArray(1)
                 GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0)
                 if (compiled[0] == 0) {
+                    val msg = GLES20.glGetShaderInfoLog(shader)
                     GLES20.glDeleteShader(shader)
+                    Log.e("GpuProgram", "${if (shaderType == GLES20.GL_VERTEX_SHADER) "GL_VERTEX_SHADER" else "GL_FRAGMENT_SHADER" } buildProgram Error compiling GL vertex shader \n $msg")
                     shader = 0
                 }
             }
@@ -66,7 +69,11 @@ enum class ShaderUtils {
                 val linkStatus = IntArray(1)
                 GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0)
                 if (linkStatus[0] != GLES20.GL_TRUE) {
+                    val msg = GLES20.glGetProgramInfoLog(program)
                     GLES20.glDeleteProgram(program)
+                    GLES20.glDeleteShader(vertex)
+                    GLES20.glDeleteShader(fragment)
+                    Log.e("GpuProgram", "buildProgram Error linking GL program \n$msg")
                     program = 0
                 }
             }

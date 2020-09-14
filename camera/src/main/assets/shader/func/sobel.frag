@@ -20,6 +20,7 @@ float colorR(vec2 center,float shiftX,float shiftY){
 
 void main(){
     vec2 center=vec2(vTextureCo.x*uWidth,vTextureCo.y*uHeight);
+
     float leftTop=colorR(center,-step,-step);
     float centerTop=colorR(center,0.,-step);
     float rightTop=colorR(center,step,-step);
