@@ -4,7 +4,9 @@ import android.content.res.Resources
 import com.wyz.camera.api.Renderer
 
 open class GroupShader : LazyShader {
+
     private val mGroup: MutableList<Renderer>
+    private var isDrawing = false;
 
     constructor(resource: Resources) : super(resource)
 
@@ -13,26 +15,43 @@ open class GroupShader : LazyShader {
     }
 
     fun addFilter(filter: Renderer) {
-        mGroup.add(filter)
+        addFilter(mGroup.size, filter)
     }
 
     fun addFilter(index: Int, filter: Renderer) {
-        mGroup.add(index, filter)
+        if (isDrawing) {
+            runOnGLThread(Runnable {
+                filter.create()
+                filter.sizeChanged(mWidth, mHeight)
+                mGroup.add(index, filter)
+            })
+        } else {
+            mGroup.add(index, filter)
+        }
     }
 
     fun removeFilter(index: Int) {
-        runOnGLThread(Runnable {
-            val removeAt = mGroup.removeAt(index)
-            removeAt.destroy()
-        })
+        if(isDrawing){
+            runOnGLThread(Runnable {
+                val removeAt = mGroup.removeAt(index)
+                removeAt.destroy()
+            })
+        }else{
+            mGroup.removeAt(index)
+        }
+
     }
 
     fun removeFilter(filter: Renderer) {
-        runOnGLThread(Runnable {
-            if (mGroup.remove(filter)) {
-                filter.destroy()
-            }
-        })
+        if(isDrawing){
+            runOnGLThread(Runnable {
+                if (mGroup.remove(filter)) {
+                    filter.destroy()
+                }
+            })
+        }else{
+            mGroup.remove(filter)
+        }
     }
 
     fun get(index: Int): Renderer {
@@ -62,6 +81,9 @@ open class GroupShader : LazyShader {
     }
 
     override fun draw(texture: Int) {
+        if(!isDrawing){
+            isDrawing = true
+        }
         var tempTextureId = texture
         mGroup.forEach {
             tempTextureId = it.drawToTexture(tempTextureId)

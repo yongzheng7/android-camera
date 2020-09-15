@@ -14,6 +14,7 @@ import com.wyz.camera.core.egl.EGLContextAttrs
 import com.wyz.camera.core.egl.EGLHelper
 import com.wyz.camera.core.base.FrameBuffer
 import com.wyz.camera.core.gl.AbsWrapShader
+import com.wyz.camera.core.gl.GroupShader
 import com.wyz.camera.core.gl.LazyWrapShader
 import java.lang.RuntimeException
 
@@ -41,8 +42,17 @@ class PictureProcessor {
     }
 
     fun setRenderer(renderer: Renderer) {
-        mRenderer = LazyWrapShader(renderer)
+        if(mRenderer == null){
+            mRenderer = LazyWrapShader(renderer)
+        }else{
+            val temp = mRenderer!!.getRenderer()
+            if(temp is GroupShader){
+                temp.addFilter(renderer)
+            }
+        }
     }
+
+    fun isRunning(): Boolean = mGLThreadFlag
 
     fun start() {
         synchronized(LOCK) {
@@ -51,7 +61,7 @@ class PictureProcessor {
                     return
                 }
                 mGLThreadFlag = true
-                mGLThread = Thread(Runnable{glRun()})
+                mGLThread = Thread(Runnable { glRun() })
                 mGLThread?.start()
                 try {
                     LOCK.wait()
@@ -88,14 +98,14 @@ class PictureProcessor {
             return
         }
         val intArray = IntArray(1) // 创建一个屏幕纹理id
-        intArray[0]= -1
+        intArray[0] = -1
         val size = iTextureProvider.open(intArray)
-        if (size.x <= 0 || size.y <= 0 ) {
+        if (size.x <= 0 || size.y <= 0) {
             destroyGL(egl)
             synchronized(LOCK) { LOCK.notifyAll() }
             return
         }
-        if(intArray[0] == -1){
+        if (intArray[0] == -1) {
             destroyGL(egl)
             synchronized(LOCK) { LOCK.notifyAll() }
             throw RuntimeException(" texture id = -1")
@@ -111,7 +121,7 @@ class PictureProcessor {
         if (mRenderer == null) {
             mRenderer = LazyWrapShader(null)
         }
-        Log.e("GLthread","create >") ;
+        Log.e("GLthread", "create >");
         mRenderer?.create()
         mRenderer?.sizeChanged(mSourceWidth, mSourceHeight)
         mRenderer?.setFlag(if (iTextureProvider.isLandscape()) AbsWrapShader.TYPE_1379 else AbsWrapShader.TYPE_1739)

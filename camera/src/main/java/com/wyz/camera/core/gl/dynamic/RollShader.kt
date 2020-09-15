@@ -1,7 +1,8 @@
-package com.wyz.camera.core.gl
+package com.wyz.camera.core.gl.dynamic
 
 import android.content.res.Resources
 import android.opengl.GLES20
+import com.wyz.camera.core.gl.LazyShader
 
 class RollShader : LazyShader {
 

@@ -137,6 +137,8 @@ class ScreenShower {
         mShower.recycle()
     }
 
+    fun isRunning(): Boolean = mTextureProcessor.isRunning()
+
 
     fun setSurface(surface: Any) {
         mShower.setSurface(surface)
@@ -147,12 +149,16 @@ class ScreenShower {
     }
 
     fun open() {
-        mTextureProcessor.start()
+        if(!mTextureProcessor.isRunning()){
+            mTextureProcessor.start()
+        }
     }
 
     fun close() {
-        mShower.recycle()
-        mTextureProcessor.stop()
+        if(mTextureProcessor.isRunning()){
+            mShower.recycle()
+            mTextureProcessor.stop()
+        }
     }
 
 

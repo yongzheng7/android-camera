@@ -27,7 +27,11 @@ abstract class AbsWrapShader : Renderer {
         setFlag(TYPE_7193)
     }
 
-    abstract fun getDefault(): BaseShader
+    protected abstract fun getDefault(): BaseShader
+
+    fun getRenderer(): Renderer? {
+        return mRenderer
+    }
 
     /**
      * TYPE_MOVE
