@@ -198,7 +198,7 @@ abstract class BaseShader : Renderer {
         mFrameTemp.bindFrameBuffer(mWidth, mHeight)
         draw(texture)
         mFrameTemp.unBindFrameBuffer()
-        return mFrameTemp.cacheTextureId
+        return mFrameTemp.getCacheTextureId()
     }
 
     protected open fun onClear() {

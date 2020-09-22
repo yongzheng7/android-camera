@@ -141,7 +141,7 @@ class PictureProcessor {
             mRenderer?.draw(intArray[0])
             sourceFrame.unBindFrameBuffer()
             //接收数据源传入的时间戳
-            rb.textureId = sourceFrame.cacheTextureId
+            rb.textureId = sourceFrame.getCacheTextureId()
             rb.timeStamp = iTextureProvider.getTimeStamp()
             rb.textureTime = System.currentTimeMillis()
             observable.notify(rb)

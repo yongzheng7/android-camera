@@ -129,7 +129,7 @@ class SurfaceProcessor {
             sourceFrame.unBindFrameBuffer()
 
             //接收数据源传入的时间戳
-            rb.textureId = sourceFrame.cacheTextureId
+            rb.textureId = sourceFrame.getCacheTextureId()
             rb.timeStamp = iTextureProvider.getTimeStamp()
             rb.textureTime = mInputSurfaceTexture.timestamp
             observable.notify(rb)

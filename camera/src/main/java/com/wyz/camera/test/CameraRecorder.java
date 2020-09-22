@@ -16,8 +16,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.Surface;
 
-import com.wyz.camera.core.base.FrameBuffer;
 import com.wyz.camera.api.Renderer;
+import com.wyz.camera.core.base.FrameBuffer;
 import com.wyz.camera.core.egl.EGLConfigAttrs;
 import com.wyz.camera.core.egl.EGLContextAttrs;
 import com.wyz.camera.core.egl.EGLHelper;

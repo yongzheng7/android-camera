@@ -6,11 +6,7 @@ import java.util.*
 
 open class Observable<T> : IObservable<T> {
 
-    private val observers: ArrayList<IObserver<T>>
-
-    constructor() {
-        this.observers = arrayListOf()
-    }
+    private val observers: ArrayList<IObserver<T>> = arrayListOf()
 
     override fun addObserver(observer: IObserver<T>) {
         synchronized(observers){
