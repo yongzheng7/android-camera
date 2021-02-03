@@ -10,11 +10,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.wyz.camera.ScreenShower;
-import com.wyz.camera.core.gl.Faltung33Shader;
-import com.wyz.camera.core.gl.GroupShader;
-import com.wyz.camera.core.gl.dynamic.RollShader;
-import com.wyz.common.ui.AbsActionBarActivity;
+import com.atom.camera.ScreenShower;
+import com.atom.camera.core.gl.Faltung33Shader;
+import com.atom.camera.core.gl.GroupShader;
 
 
 public class ScreenShower2Activity extends AbsActionBarActivity {

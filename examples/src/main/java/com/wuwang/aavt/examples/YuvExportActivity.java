@@ -24,14 +24,14 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.camera.api.FrameDrawedListener;
-import com.wyz.camera.core.base.FrameBuffer;
-import com.wyz.camera.core.gl.LazyShader;
-import com.wyz.camera.core.gl.yuv.YuvOutputShader;
-import com.wyz.camera.core.processor.SurfaceProcessor;
-import com.wyz.camera.core.texture.consume.FrameShower;
-import com.wyz.camera.core.base.FrameBean;
-import com.wyz.camera.core.texture.provider.CameraProvider;
+import com.atom.camera.api.FrameDrawedListener;
+import com.atom.camera.core.base.FrameBuffer;
+import com.atom.camera.core.gl.LazyShader;
+import com.atom.camera.core.gl.yuv.YuvOutputShader;
+import com.atom.camera.core.processor.SurfaceProcessor;
+import com.atom.camera.core.texture.consume.FrameShower;
+import com.atom.camera.core.base.FrameBean;
+import com.atom.camera.core.texture.provider.CameraProvider;
 
 import org.jetbrains.annotations.NotNull;
 

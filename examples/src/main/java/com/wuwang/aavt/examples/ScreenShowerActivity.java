@@ -9,11 +9,10 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.wyz.camera.ScreenShower;
-import com.wyz.camera.core.gl.GroupShader;
-import com.wyz.camera.core.gl.func.FluorescenceShader;
-import com.wyz.common.ui.AbsActionBarActivity;
-import com.wyz.camera.view.CircularProgressView;
+import com.atom.camera.ScreenShower;
+import com.atom.camera.core.gl.GroupShader;
+import com.atom.camera.core.gl.func.FluorescenceShader;
+import com.atom.camera.view.CircularProgressView;
 
 
 public class ScreenShowerActivity extends AbsActionBarActivity {

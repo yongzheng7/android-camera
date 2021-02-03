@@ -16,10 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.camera.CameraRecorder;
-import com.wyz.camera.core.gl.GroupShader;
-import com.wyz.camera.core.gl.mark.WaterMarkShader;
-import com.wyz.camera.view.CircularProgressView;
+import com.atom.camera.CameraRecorder;
+import com.atom.camera.core.gl.GroupShader;
+import com.atom.camera.core.gl.mark.WaterMarkShader;
+import com.atom.camera.view.CircularProgressView;
 
 
 public class CameraRecorderActivity extends AppCompatActivity {

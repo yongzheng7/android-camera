@@ -18,13 +18,13 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.camera.VideoRecorder;
-import com.wyz.camera.core.gl.GroupShader;
-import com.wyz.camera.core.gl.LazyShader;
-import com.wyz.camera.core.gl.beauty.BeautyShader;
-import com.wyz.camera.core.gl.func.StickFigureShader;
-import com.wyz.camera.core.gl.mark.WaterMarkShader;
-import com.wyz.camera.core.processor.VideoProcessor;
+import com.atom.camera.VideoRecorder;
+import com.atom.camera.core.gl.GroupShader;
+import com.atom.camera.core.gl.LazyShader;
+import com.atom.camera.core.gl.beauty.BeautyShader;
+import com.atom.camera.core.gl.func.StickFigureShader;
+import com.atom.camera.core.gl.mark.WaterMarkShader;
+import com.atom.camera.core.processor.VideoProcessor;
 
 
 public class ExampleMp4Process2Activity extends AppCompatActivity {

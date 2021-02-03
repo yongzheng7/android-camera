@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.camera.test.CameraView;
+import com.atom.camera.test.CameraView;
 
 public class CameraRecorderOldActivity extends AppCompatActivity {
 

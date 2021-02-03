@@ -12,22 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.wyz.camera.CameraRecorder;
-import com.wyz.camera.core.gl.GroupShader;
-import com.wyz.camera.core.gl.func.unit.BrightnessShadser;
-import com.wyz.camera.core.gl.func.unit.CameoShader;
-import com.wyz.camera.core.gl.func.unit.ColorShader;
-import com.wyz.camera.core.gl.func.unit.ContrastShader;
-import com.wyz.camera.core.gl.func.unit.ConvolutionShader;
-import com.wyz.camera.core.gl.func.unit.InvertShader;
-import com.wyz.camera.core.gl.func.unit.SaturationShader;
-import com.wyz.camera.core.gl.func.unit.SepiaShader;
-import com.wyz.camera.core.gl.func.unit.SketchShader;
-import com.wyz.camera.core.gl.func.unit.ToonShader;
-import com.wyz.camera.core.gl.func.unit.VignetteShader;
-import com.wyz.camera.core.gl.mark.WaterMarkShader;
-import com.wyz.camera.utils.DensityUtils;
-import com.wyz.camera.view.CircularProgressView;
+import com.atom.camera.CameraRecorder;
+import com.atom.camera.core.gl.GroupShader;
+import com.atom.camera.core.gl.func.unit.BrightnessShadser;
+import com.atom.camera.core.gl.mark.WaterMarkShader;
+import com.atom.camera.utils.DensityUtils;
+import com.atom.camera.view.CircularProgressView;
 
 
 public class CameraTakePictureActivity extends AppCompatActivity {

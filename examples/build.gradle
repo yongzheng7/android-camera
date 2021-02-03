@@ -29,5 +29,4 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     testImplementation 'junit:junit:4.13'
     api project(':camera')
-    api project(':common')
 }

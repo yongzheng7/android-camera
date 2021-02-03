@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:id="@+id/mSurfaceView" />
 
-    <com.wyz.camera.view.CircularProgressView
+    <com.atom.camera.view.CircularProgressView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:onClick="onClick"
@@ -23,8 +23,8 @@
         android:layout_alignTop="@id/mTvRec"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
         android:background="@drawable/tv_start_bg"
         android:gravity="center"
         android:textSize="12sp"
@@ -32,5 +32,6 @@
         android:text="@string/start_show"
         android:clickable="true"
         android:onClick="onClick"
-        android:id="@+id/mTvShow"/>
+        android:id="@+id/mTvShow"
+        android:focusable="true" />
 </RelativeLayout>
